@@ -1,5 +1,7 @@
 package com.example.universityadmissionscommittee.data;
 
+import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,17 +27,19 @@ public class Benefit {
     private String name;
 
     @Min(0)
-    @Column(name = "additional_points", nullable = false)
-    private int additionalPoints;
+    @Column(name = "priority_points", nullable = true)
+    private int priorityPoints;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "quota_type", nullable = true, length = 32)
+    private QuotaType type = QuotaType.NONE;
 
     protected Benefit() {}
 
-    public Benefit(String name, int additionalPoints) {
+    public Benefit(String name, int priorityPoints) {
         this.name = Objects.requireNonNull(name, "name");
-        this.additionalPoints = additionalPoints;
+        this.priorityPoints = priorityPoints;
     }
-
-
 
     public Long getId() {
         return id;
@@ -49,15 +53,21 @@ public class Benefit {
         this.name = Objects.requireNonNull(name, "name");
     }
 
-    public int getAdditionalPoints() {
-        return additionalPoints;
+    public int getPriorityPoints() {
+        return priorityPoints;
     }
 
-    public void setAdditionalPoints(int additionalPoints) {
-        this.additionalPoints = additionalPoints;
+    public void setPriorityPoints(int additionalPoints) {
+        this.priorityPoints = additionalPoints;
     }
 
+    public QuotaType getType() {
+        return type;
+    }
 
+    public void setType(QuotaType type) {
+        this.type = type;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -75,7 +85,7 @@ public class Benefit {
     public String toString() {
         return "Benefit{id=" + id +
                 ", name='" + name + '\'' +
-                ", additionalPoints=" + additionalPoints +
+                ", additionalPoints=" + priorityPoints +
                 '}';
     }
 }

@@ -2,6 +2,8 @@ package com.example.universityadmissionscommittee.dto;
 
 import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
 
+import java.time.LocalDate;
+
 public class ExamRowDto {
     private Long applicantId;
     private String firstName;
@@ -18,6 +20,7 @@ public class ExamRowDto {
     private Long benefitId;
     private String benefitName;
     private Integer benefitPoints;
+    private LocalDate submissionDate;
 
     public ExamRowDto(Long applicantId, String firstName,
                       String lastName, String phoneNumber,
@@ -28,6 +31,7 @@ public class ExamRowDto {
                       String subjectName,
                       Integer score, Integer priority,
                       ApplicantStatus status,
+                      LocalDate submissionDate,
                       Long benefitId,
                       String benefitName,
                       Integer benefitPoints) {
@@ -46,6 +50,7 @@ public class ExamRowDto {
         this.benefitId = benefitId;
         this.benefitName = benefitName;
         this.benefitPoints = benefitPoints;
+        this.submissionDate = submissionDate;
     }
 
     public Long getApplicantId() {
@@ -102,5 +107,9 @@ public class ExamRowDto {
 
     public Integer getBenefitPoints() {
         return benefitPoints;
+    }
+
+    public LocalDate getSubmissionDate() {
+        return submissionDate;
     }
 }

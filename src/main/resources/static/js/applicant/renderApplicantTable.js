@@ -25,6 +25,7 @@ export function renderApplicantTable(report) {
                 <th>Телефон</th>
                 <th>Email</th>
                 <th>Середній бал</th>
+                <th>Дата подачі</th>
                 <th>Статус</th>
                 ${report.subjectIdsBySpecialty[specialtyId].map(id => `
                     <th>${report.subjectNames[id]}</th>
@@ -44,6 +45,7 @@ export function renderApplicantTable(report) {
                 <td>${applicant.phoneNumber}</td>
                 <td>${applicant.email}</td>
                 <td>${formatScore(applicant.averageScore)}</td>
+                <td>${applicant.submissionDate}</td>
                 <td>${applicant.status}</td>
                 ${report.subjectIdsBySpecialty[specialtyId].map(id => `
                     <td>${formatScore(applicant.subjectAndScore[id] ?? '-')}</td>

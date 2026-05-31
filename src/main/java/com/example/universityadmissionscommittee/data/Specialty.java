@@ -36,8 +36,14 @@ public class Specialty {
     @JoinColumn(name = "faculty_id", nullable = false)
     private Faculty faculty;
 
-    @Column(name = "number_of_budget_places", nullable = false)
-    private int numberOfBudgetPlaces;
+    @Column(name = "budget_places_quota1", nullable = false)
+    private int budgetPlacesQuota1;
+
+    @Column(name = "budget_places_quota2", nullable = false)
+    private int budgetPlacesQuota2;
+
+    @Column(name = "budget_places_general", nullable = false)
+    private int budgetPlacesGeneral;
 
     @Column(name = "number_of_contract_places", nullable = false)
     private int numberOfContractPlaces;
@@ -57,11 +63,11 @@ public class Specialty {
     }
 
     public Specialty(String name, int number, Faculty faculty,
-                     int numberOfBudgetPlaces, int numberOfContractPlaces) {
+                     int budgetPlacesGeneral, int numberOfContractPlaces) {
         this.name = Objects.requireNonNull(name, "name");
         this.number = number;
         this.faculty = Objects.requireNonNull(faculty, "faculty");
-        this.numberOfBudgetPlaces = numberOfBudgetPlaces;
+        this.budgetPlacesGeneral = budgetPlacesGeneral;
         this.numberOfContractPlaces = numberOfContractPlaces;
     }
 
@@ -100,9 +106,9 @@ public class Specialty {
         this.faculty = Objects.requireNonNull(faculty, "faculty");
     }
 
-    public int getNumberOfBudgetPlaces() { return numberOfBudgetPlaces; }
-    public void setNumberOfBudgetPlaces(int numberOfBudgetPlaces) {
-        this.numberOfBudgetPlaces = numberOfBudgetPlaces;
+    public int getBudgetPlacesGeneral() { return budgetPlacesGeneral; }
+    public void setBudgetPlacesGeneral(int numberOfBudgetPlaces) {
+        this.budgetPlacesGeneral = numberOfBudgetPlaces;
     }
 
     public int getNumberOfContractPlaces() { return numberOfContractPlaces; }

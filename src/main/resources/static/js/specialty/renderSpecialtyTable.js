@@ -22,7 +22,9 @@ export function renderSpecialtyTable(report) {
                 <th>ID</th>
                 <th>Назва спеціальності</th>
                 <th>Код спеціальності</th>
-                <th>Бюджетні місця</th>
+                <th>Бюджетні місця квоти 1</th>
+                <th>Бюджетні місця квоти 2</th>
+                <th>Бюджетні місця загальний конкурс</th>
                 <th>Контрактні місця</th>
                 <th>Всього місць</th>
             </tr>
@@ -36,7 +38,9 @@ export function renderSpecialtyTable(report) {
                 <td>${specialty.id}</td>
                 <td>${specialty.name}</td>
                 <td>${specialty.number}</td>
-                <td>${specialty.numberOfBudgetPlaces ?? ''}</td>
+                <td>${specialty.budgetPlacesQuota1 ?? ''}</td>
+                <td>${specialty.budgetPlacesQuota2 ?? ''}</td>
+                <td>${specialty.budgetPlacesGeneral ?? ''}</td>
                 <td>${specialty.numberOfContractPlaces ?? ''}</td>
                 <td>${specialty.sumOfPlaces ?? ''}</td>
             `;

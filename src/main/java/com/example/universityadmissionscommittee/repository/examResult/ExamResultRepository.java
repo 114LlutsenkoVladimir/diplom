@@ -25,9 +25,10 @@ public interface ExamResultRepository extends JpaRepository<ExamResult, Long>, E
                 e.result,
                 spf.priority,
                 spf.applicantStatus,
+                spf.date,
                 b.id,
                 b.name,
-                b.additionalPoints
+                b.priorityPoints
             )
             from ExamResult e
             join e.applicant a

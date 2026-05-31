@@ -2,6 +2,8 @@ package com.example.universityadmissionscommittee.mapping;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @SqlResultSetMapping(
         name = "ExamRowDtoMapping",
@@ -21,6 +23,7 @@ import jakarta.persistence.*;
                         @ColumnResult(name = "priority", type = Integer.class),
                         @ColumnResult(name = "applicant_status", type = com.example.universityadmissionscommittee
                                 .data.enums.ApplicantStatus.class),
+                        @ColumnResult(name = "submission_date", type = LocalDate.class),
                         @ColumnResult(name = "benefit_id", type = Long.class),
                         @ColumnResult(name = "benefit_name", type = String.class),
                         @ColumnResult(name = "benefit_points", type = Integer.class)

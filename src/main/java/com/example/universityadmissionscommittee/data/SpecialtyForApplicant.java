@@ -4,6 +4,8 @@ import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -40,6 +42,10 @@ public class SpecialtyForApplicant {
     @Column(name = "applicant_status", nullable = false, length = 32)
     private ApplicantStatus applicantStatus = ApplicantStatus.PENDING;
 
+    @Column(name = "submission_date", nullable = false, length = 32)
+    private LocalDate date = LocalDate.now();
+
+
     protected SpecialtyForApplicant() {
         // JPA only
     }
@@ -50,7 +56,7 @@ public class SpecialtyForApplicant {
         this.priority = Objects.requireNonNull(priority, "priority");
     }
 
-    /** Удобная фабрика: создаёт связь и синхронизирует обе стороны. */
+
     public static SpecialtyForApplicant link(Applicant applicant, Specialty specialty, Integer priority) {
         SpecialtyForApplicant sfa = new SpecialtyForApplicant(applicant, specialty, priority);
         applicant.addSpecialty(sfa);     // двусторонняя синхронизация
@@ -79,6 +85,10 @@ public class SpecialtyForApplicant {
     public ApplicantStatus getApplicantStatus() { return applicantStatus; }
     public void setApplicantStatus(ApplicantStatus applicantStatus) {
         this.applicantStatus = Objects.requireNonNull(applicantStatus, "applicantStatus");
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     /* ===== equals/hashCode/toString ===== */

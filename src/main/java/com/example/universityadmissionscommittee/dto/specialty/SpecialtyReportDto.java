@@ -6,7 +6,9 @@ public class SpecialtyReportDto {
     private String name;
     private Integer number;
     private String  facultyName;
-    private Integer numberOfBudgetPlaces;
+    private Integer budgetPlacesQuota1;
+    private Integer budgetPlacesQuota2;
+    private Integer budgetPlacesGeneral;
     private Integer numberOfContractPlaces;
     private Integer sumOfPlaces;
 
@@ -14,7 +16,9 @@ public class SpecialtyReportDto {
                               Integer number,
                               Long facultyId,
                               String facultyName,
-                              Integer numberOfBudgetPlaces,
+                              Integer budgetPlacesQuota1,
+                              Integer budgetPlacesQuota2,
+                              Integer budgetPlacesGeneral,
                               Integer numberOfContractPlaces,
                               Integer sumOfPlaces) {
         this.id = id;
@@ -22,7 +26,9 @@ public class SpecialtyReportDto {
         this.number = number;
         this.facultyId = facultyId;
         this.facultyName = facultyName;
-        this.numberOfBudgetPlaces = numberOfBudgetPlaces;
+        this.budgetPlacesQuota1 = budgetPlacesQuota1;
+        this.budgetPlacesQuota2 = budgetPlacesQuota2;
+        this.budgetPlacesGeneral = budgetPlacesGeneral;
         this.numberOfContractPlaces = numberOfContractPlaces;
         this.sumOfPlaces = sumOfPlaces;
     }
@@ -44,13 +50,22 @@ public class SpecialtyReportDto {
         return facultyName;
     }
 
-    public Integer getNumberOfBudgetPlaces() {
-        return numberOfBudgetPlaces;
+    public Integer getBudgetPlacesQuota1() {
+        return budgetPlacesQuota1;
+    }
+
+    public Integer getBudgetPlacesQuota2() {
+        return budgetPlacesQuota2;
+    }
+
+    public Integer getBudgetPlacesGeneral() {
+        return budgetPlacesGeneral;
     }
 
     public Integer getNumberOfContractPlaces() {
         return numberOfContractPlaces;
     }
+
     public Integer getSumOfPlaces() {
         return sumOfPlaces;
     }

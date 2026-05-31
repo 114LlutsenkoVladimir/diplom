@@ -50,6 +50,8 @@ public class ApplicantReportDtoWithAverageScore {
         return base.getPriority();
     }
 
+    public String getSubmissionDate() { return  base.getSubmissionDate(); }
+
     public String getStatus() {
         return base.getStatus();
     }

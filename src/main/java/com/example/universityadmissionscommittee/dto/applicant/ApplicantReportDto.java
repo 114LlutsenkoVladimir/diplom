@@ -2,6 +2,8 @@ package com.example.universityadmissionscommittee.dto.applicant;
 
 import com.example.universityadmissionscommittee.dto.BenefitIdNamePoints;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ public class ApplicantReportDto {
     private String phoneNumber;
     private String email;
     private Integer priority;
+    private String submissionDate;
     private String status;
 
     private HashMap<Long, Integer> subjectAndScore = new HashMap<>();
@@ -21,6 +24,7 @@ public class ApplicantReportDto {
     public ApplicantReportDto(Long applicantId, String firstName,
                               String lastName, String phoneNumber,
                               String email, Integer priority,
+                              LocalDate date,
                               String status) {
         this.applicantId = applicantId;
         this.firstName = firstName;
@@ -28,6 +32,7 @@ public class ApplicantReportDto {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.priority = priority;
+        this.submissionDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.status = status;
     }
 
@@ -61,6 +66,10 @@ public class ApplicantReportDto {
 
     public Integer getPriority() {
         return priority;
+    }
+
+    public String getSubmissionDate() {
+        return submissionDate;
     }
 
     public String getStatus() {

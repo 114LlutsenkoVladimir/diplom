@@ -3,7 +3,6 @@ package com.example.universityadmissionscommittee.service;
 
 import com.example.universityadmissionscommittee.data.Faculty;
 import com.example.universityadmissionscommittee.data.Specialty;
-import com.example.universityadmissionscommittee.data.Subject;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyCreateDto;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyIdAndNameDto;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyReportDto;
@@ -50,7 +49,7 @@ public class SpecialtyService  extends AbstractCrudService<Specialty, Long, Spec
                                       Optional<Integer> budgetPlaces,
                                       Optional<Integer> contractPlaces) {
         Specialty specialty = findById(id);
-        budgetPlaces.ifPresent(specialty::setNumberOfBudgetPlaces);
+        budgetPlaces.ifPresent(specialty::setBudgetPlacesGeneral);
         contractPlaces.ifPresent(specialty::setNumberOfContractPlaces);
         repository.save(specialty);
     }

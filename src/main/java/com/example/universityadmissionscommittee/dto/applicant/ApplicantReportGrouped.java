@@ -69,6 +69,7 @@ public class ApplicantReportGrouped {
                             row.getPhoneNumber(),
                             row.getEmail(),
                             row.getPriority(),
+                            row.getSubmissionDate(),
                             row.getStatus()
                     )
             );

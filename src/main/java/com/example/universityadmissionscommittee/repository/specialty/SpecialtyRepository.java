@@ -15,8 +15,9 @@ public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
     @Query("""
         SELECT new com.example.universityadmissionscommittee.dto.specialty.SpecialtyReportDto(
             s.id, s.name, s.number, f.id, f.name,
-            s.numberOfBudgetPlaces, s.numberOfContractPlaces,
-            s.numberOfBudgetPlaces + s.numberOfContractPlaces
+            s.budgetPlacesQuota1, s.budgetPlacesQuota2,
+            s.budgetPlacesGeneral, s.numberOfContractPlaces,
+            s.budgetPlacesGeneral + s.numberOfContractPlaces + s.budgetPlacesQuota1 + s.budgetPlacesQuota2
         )
         FROM Specialty s
         JOIN s.faculty f
@@ -28,8 +29,9 @@ public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
     @Query("""
         SELECT new com.example.universityadmissionscommittee.dto.specialty.SpecialtyReportDto(
             s.id, s.name, s.number, f.id, f.name,
-            s.numberOfBudgetPlaces, s.numberOfContractPlaces,
-            s.numberOfBudgetPlaces + s.numberOfContractPlaces
+            s.budgetPlacesQuota1, s.budgetPlacesQuota2,
+            s.budgetPlacesGeneral, s.numberOfContractPlaces,
+            s.budgetPlacesGeneral + s.numberOfContractPlaces + s.budgetPlacesQuota1 + s.budgetPlacesQuota2
         )
         FROM Specialty s
         JOIN s.faculty f
