@@ -74,3 +74,20 @@ export function buildUpdateApplicantStatusQueryParams() {
     return params.toString();
 }
 
+export function buildFindApplicantsByQuotaQueryParams() {
+    const quotaType = document.getElementById("quota-type-select").value
+    const params = new URLSearchParams();
+    params.append("type", quotaType)
+    return params.toString();
+}
+
+
+export function buildFindApplicantsByQuotaAndSpecialtyQueryParams() {
+    const quotaType = document.getElementById("quota-type-select").value
+    const specialty = document.getElementById("specialty-select").value
+    const params = new URLSearchParams();
+    params.append("type", quotaType)
+    params.append("specialtyId", specialty)
+    return params.toString();
+}
+

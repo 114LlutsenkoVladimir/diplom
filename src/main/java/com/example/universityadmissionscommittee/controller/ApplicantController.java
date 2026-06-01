@@ -2,6 +2,7 @@ package com.example.universityadmissionscommittee.controller;
 
 import com.example.universityadmissionscommittee.data.*;
 import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantCreateDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantInitDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
@@ -48,6 +49,7 @@ public class ApplicantController {
                 benefitService.allIdAndName(),
                 subjectService.allIdAndName(),
                 specialtyService.allIdAndName(),
+                Arrays.stream(QuotaType.values()).toList(),
                 Arrays.stream(ApplicantStatus.values()).toList()
         );
     }
@@ -115,6 +117,17 @@ public class ApplicantController {
     @GetMapping("/filterApplicantsBySpecialty/{specialtyId}")
     public ApplicantReportGrouped filterApplicants(@PathVariable Long specialtyId) {
         return updateTable(specialtyId);
+    }
+
+    @GetMapping("/findApplicantsByQuota")
+    public ApplicantReportGrouped findApplicantsByQuota(@RequestParam QuotaType type) {
+        return applicantService.getApplicantsByQuota(type);
+    }
+
+    @GetMapping("/findApplicantsByQuotaAndSpecialty")
+    public ApplicantReportGrouped findApplicantsByQuotaAndSpecialty(@RequestParam QuotaType type,
+                                                                    @RequestParam Long specialtyId) {
+        return applicantService.getApplicantsBySpecialtyAndQuotaType(specialtyId, type);
     }
 
 

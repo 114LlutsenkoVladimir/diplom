@@ -1,7 +1,7 @@
 import {setupSpecialtyChecker} from "./listener.js";
 import {
     handleDelete,
-    handleFindApplicant,
+    handleFindApplicant, handleFindApplicantsByQuotaType, handleFindApplicantsByQuotaTypeAndSpecialty,
     handleSpecialtySelection,
     handleSubmit,
     handleUpdateStatus
@@ -35,13 +35,18 @@ export async function initCommon(initMap) {
         .querySelector("button").addEventListener("click", handleFindApplicant);
 }
 
-export async function initCommittee(initMap) {
+async function initCommittee(initMap) {
     initStatusSelect(initMap.allStatuses)
+    initQuotaSelect(initMap.allQuotaTypes)
+    document.getElementById("quota-type-select")
+        .addEventListener("change", handleFindApplicantsByQuotaType)
+
+    document.getElementById("select-by-specialty-and-quota")
+        .addEventListener("click", handleFindApplicantsByQuotaTypeAndSpecialty)
 
     document.getElementById("updateApplicantStatusForm")
         .querySelector("button").addEventListener("click", handleUpdateStatus);
 }
-
 
 function initBenefits(benefits) {
     const container = document.getElementById('benefitIds');
@@ -100,6 +105,17 @@ function initSpecialtySelect(specialties) {
     });
 }
 
+function initQuotaSelect(quotaTypes) {
+    const select = document.getElementById('quota-type-select');
+    console.log(select)
+    console.log(quotaTypes)
+    quotaTypes.forEach(quotaType => {
+        const option = document.createElement('option');
+        option.value = quotaType.code;
+        option.textContent = quotaType.name;
+        select.appendChild(option);
+    });
+}
 
 function initStatusSelect(statuses) {
     const select = document.getElementById('applicantStatusSelect');

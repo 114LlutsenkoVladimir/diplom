@@ -1,6 +1,7 @@
 package com.example.universityadmissionscommittee.repository.examResult;
 
 import com.example.universityadmissionscommittee.data.ExamResult;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -43,4 +44,65 @@ public interface ExamResultRepository extends JpaRepository<ExamResult, Long>, E
     List<ExamRowDto> findExamRowsByApplicantKeyAttributes(@Param("applicantId") Long id,
                                                               @Param("email") String email,
                                                               @Param("phoneNumber") String phoneNumber);
+
+    @Query("""
+        SELECT new com.example.universityadmissionscommittee.dto.ExamRowDto(
+                a.id,
+                a.firstName,
+                a.lastName,
+                a.phoneNumber,
+                a.email,
+                sp.id,
+                sp.name,
+                s.id,
+                s.name,
+                e.result,
+                spf.priority,
+                spf.applicantStatus,
+                spf.date,
+                b.id,
+                b.name,
+                b.priorityPoints
+            )
+            from ExamResult e
+            join e.applicant a
+            join e.subject s
+            join a.specialties spf
+            join spf.specialty sp
+            LEFT join a.benefits b
+            WHERE (b.type = :quotaType OR (b.id IS NULL AND :#{#quotaType.name()} = 'NONE'))
+    """)
+    List<ExamRowDto> findExamRowsByQuota(@Param("quotaType") QuotaType type);
+
+
+    @Query("""
+        SELECT new com.example.universityadmissionscommittee.dto.ExamRowDto(
+                a.id,
+                a.firstName,
+                a.lastName,
+                a.phoneNumber,
+                a.email,
+                sp.id,
+                sp.name,
+                s.id,
+                s.name,
+                e.result,
+                spf.priority,
+                spf.applicantStatus,
+                spf.date,
+                b.id,
+                b.name,
+                b.priorityPoints
+            )
+            from ExamResult e
+            join e.applicant a
+            join e.subject s
+            join a.specialties spf
+            join spf.specialty sp
+            LEFT join a.benefits b
+            WHERE (b.type = :quotaType OR (b.id IS NULL AND :#{#quotaType.name()} = 'NONE'))
+            AND (sp.id = :specialtyId)
+    """)
+    List<ExamRowDto> findExamRowsByQuotaAndSpecialty(@Param("quotaType") QuotaType type,
+                                                     @Param("specialtyId") Long specialtyId);
 }

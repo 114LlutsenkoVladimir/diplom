@@ -1,10 +1,17 @@
 import {
     buildDto,
     buildFindApplicantQueryParams,
+    buildFindApplicantsByQuotaAndSpecialtyQueryParams, buildFindApplicantsByQuotaQueryParams,
     buildUpdateApplicantStatusQueryParams,
     getSelectedSpecialtiesFromDOM
 } from "./buildDto.js";
-import {deleteApplicant, findApplicantByKeyAttributes, sendApplicant, updateApplicantStatus} from "./api.js";
+import {
+    deleteApplicant,
+    findApplicantByKeyAttributes,
+    findApplicantByQuotaType, findApplicantByQuotaTypeAndSpecialty,
+    sendApplicant,
+    updateApplicantStatus
+} from "./api.js";
 import {renderApplicantTable} from "./renderApplicantTable.js";
 import {clearDeleteForm, clearFindForm, clearSendForm, clearUpdateStatusForm} from "./clearApplicantForm.js";
 import {showError} from "../errorPopup/errorPopup.js";
@@ -61,6 +68,26 @@ export async function handleUpdateStatus() {
         const report = await updateApplicantStatus(params)
         renderApplicantTable(report)
         clearUpdateStatusForm()
+    } catch (error) {
+        showError(error.message)
+    }
+}
+
+export async function handleFindApplicantsByQuotaType() {
+    try {
+        const params = buildFindApplicantsByQuotaQueryParams()
+        const report = await findApplicantByQuotaType(params)
+        renderApplicantTable(report)
+    } catch (error) {
+        showError(error.message)
+    }
+}
+
+export async function handleFindApplicantsByQuotaTypeAndSpecialty() {
+    try {
+        const params = buildFindApplicantsByQuotaAndSpecialtyQueryParams()
+        const report = await findApplicantByQuotaTypeAndSpecialty(params)
+        renderApplicantTable(report)
     } catch (error) {
         showError(error.message)
     }

@@ -49,3 +49,22 @@ export async function updateApplicantStatus(params) {
     }
     return await response.json();
 }
+
+
+export async function findApplicantByQuotaType(params) {
+    const response = await fetch("findApplicantsByQuota?" + params)
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
+    return await response.json();
+}
+
+export async function findApplicantByQuotaTypeAndSpecialty(params) {
+    const response = await fetch("findApplicantsByQuotaAndSpecialty?" + params)
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
+    return await response.json();
+}

@@ -2,6 +2,7 @@ package com.example.universityadmissionscommittee.service;
 
 import com.example.universityadmissionscommittee.data.*;
 import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantCreateDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
@@ -71,6 +72,11 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
     }
 
     @Transactional(readOnly = true)
+    public ApplicantReportGrouped getApplicantsBySpecialtyAndQuotaType(Long specialtyId, QuotaType type) {
+        return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuotaAndSpecialty(type, specialtyId));
+    }
+
+    @Transactional(readOnly = true)
     public ApplicantReportGrouped getApplicantsByOneSpecialty(Long specialtyId) {
         return getApplicantsBySpecialties(new ArrayList<>(List.of(specialtyId)));
     }
@@ -80,6 +86,13 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
         return getApplicantsBySpecialties(specialtyService.findAll()
                 .stream().map(Specialty::getId).toList());
     }
+
+    @Transactional(readOnly = true)
+    public ApplicantReportGrouped getApplicantsByQuota(QuotaType type) {
+        return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuota(type));
+    }
+
+
 
     @Transactional(readOnly = true)
     public ApplicantReportGrouped findApplicantByKeyAttributes(Long applicantId,
