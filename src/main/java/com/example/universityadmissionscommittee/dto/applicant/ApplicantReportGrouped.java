@@ -63,6 +63,7 @@ public class ApplicantReportGrouped {
 
             var dto = byApplicant.computeIfAbsent(applicantId, id ->
                     new ApplicantReportDto(
+                            row.getSpecialtyForApplicantId(),
                             row.getApplicantId(),
                             row.getFirstName(),
                             row.getLastName(),

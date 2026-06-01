@@ -73,7 +73,7 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
 
     @Transactional(readOnly = true)
     public ApplicantReportGrouped getApplicantsBySpecialtyAndQuotaType(Long specialtyId, QuotaType type) {
-        return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuotaAndSpecialty(type, specialtyId));
+        return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuotaAndSpecialty(specialtyId, type));
     }
 
     @Transactional(readOnly = true)

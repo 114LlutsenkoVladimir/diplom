@@ -1,5 +1,6 @@
 package com.example.universityadmissionscommittee.repository.examResult;
 
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
@@ -14,10 +15,10 @@ public class ExamResultRepositoryImpl implements ExamResultRepositoryCustom {
         this.entityManager = entityManager;
     }
 
-    @Override
-    public List<ExamRowDto> examRowData(List<Long> specialtyIds) {
-        String sql = """
-        SELECT 
+    public String examRowDataCondition(String condition) {
+        return """
+        SELECT
+            asp.id AS specialty_for_applicant_id,
             a.id AS applicant_id,
             a.first_name,
             a.last_name,
@@ -43,13 +44,37 @@ public class ExamResultRepositoryImpl implements ExamResultRepositoryCustom {
         LEFT JOIN exam_result e ON e.applicant_id = a.id AND e.subject_id = s.id
         LEFT JOIN benefit_for_applicant bfa ON a.id = bfa.applicant_id
         LEFT JOIN benefit b ON b.id = bfa.benefit_id
-    
-        WHERE sp.id IN (?1)
-        ORDER BY sp.id, a.id, s.id
-    """;
+        """ + "\n" + condition + "\n" + "ORDER BY sp.id, a.id, s.id";
+    }
+
+    @Override
+    public List<ExamRowDto> examRowData(List<Long> specialtyIds) {
+        String sql = examRowDataCondition("WHERE sp.id IN (?1)");
         return entityManager
                 .createNativeQuery(sql, "ExamRowDtoMapping")
                 .setParameter(1, specialtyIds)
+                .getResultList();
+    }
+
+    @Override
+    public List<ExamRowDto> findExamRowsByQuota(QuotaType type) {
+        String sql = examRowDataCondition("WHERE b.quota_type = ?1 OR (?1 = 'NONE' AND b.id IS NULL)");
+        return entityManager
+                .createNativeQuery(sql, "ExamRowDtoMapping")
+                .setParameter(1, type.name())
+                .getResultList();
+    }
+
+    @Override
+    public List<ExamRowDto> findExamRowsByQuotaAndSpecialty(Long specialtyId, QuotaType type) {
+        String sql = examRowDataCondition("""
+        WHERE sp.id = ?1 
+        AND (b.quota_type = ?2 OR (?2 = 'NONE' AND b.id IS NULL))
+        """);
+        return entityManager
+                .createNativeQuery(sql, "ExamRowDtoMapping")
+                .setParameter(1, specialtyId)
+                .setParameter(2, type.name())
                 .getResultList();
     }
 }

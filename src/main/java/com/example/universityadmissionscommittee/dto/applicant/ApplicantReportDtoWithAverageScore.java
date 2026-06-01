@@ -21,6 +21,10 @@ public class ApplicantReportDtoWithAverageScore {
         return averageScore;
     }
 
+    public Long getSpecialtyForApplicantId() {
+        return base.getSpecialtyForApplicantId();
+    }
+
     public Long getApplicantId() {
         return base.getApplicantId();
     }
@@ -40,7 +44,6 @@ public class ApplicantReportDtoWithAverageScore {
     public String getEmail() {
         return base.getEmail();
     }
-
 
     public HashMap<Long, Integer> getSubjectAndScore() {
         return base.getSubjectAndScore();

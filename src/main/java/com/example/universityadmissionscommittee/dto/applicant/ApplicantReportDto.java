@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApplicantReportDto {
+    private Long specialtyForApplicantId;
     private Long applicantId;
     private String firstName;
     private String lastName;
@@ -21,11 +22,13 @@ public class ApplicantReportDto {
     private HashMap<Long, Integer> subjectAndScore = new HashMap<>();
     private List<BenefitIdNamePoints> benefits = new ArrayList<>();
 
-    public ApplicantReportDto(Long applicantId, String firstName,
+    public ApplicantReportDto(Long specialtyForApplicantId,
+                              Long applicantId, String firstName,
                               String lastName, String phoneNumber,
                               String email, Integer priority,
                               LocalDate date,
                               String status) {
+        this.specialtyForApplicantId = specialtyForApplicantId;
         this.applicantId = applicantId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,6 +37,10 @@ public class ApplicantReportDto {
         this.priority = priority;
         this.submissionDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.status = status;
+    }
+
+    public Long getSpecialtyForApplicantId() {
+        return specialtyForApplicantId;
     }
 
     public Long getApplicantId() {

@@ -19,9 +19,10 @@ export function renderApplicantTable(report) {
         thead.className = "table-light";
         thead.innerHTML = `
             <tr>
-                <th>id</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
+                <th>id заяви</th>
+                <th>id абітурієнта</th>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
                 <th>Телефон</th>
                 <th>Email</th>
                 <th>Середній бал</th>
@@ -39,6 +40,7 @@ export function renderApplicantTable(report) {
         applicants.forEach(applicant => {
             const row = document.createElement("tr");
             row.innerHTML = `
+                <td>${applicant.specialtyForApplicantId}</td>
                 <td>${applicant.applicantId}</td>
                 <td>${applicant.firstName}</td>
                 <td>${applicant.lastName}</td>

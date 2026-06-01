@@ -34,4 +34,11 @@ public class Appeal {
     @Enumerated(EnumType.STRING)
     @Column(name = "appeal_status", nullable = false, length = 50)
     private AppealStatus appealStatus = AppealStatus.PENDING;
+
+    protected Appeal() {}
+
+    public Appeal(SpecialtyForApplicant specialtyForApplicant, String message) {
+        this.specialtyForApplicant = specialtyForApplicant;
+        this.message = message;
+    }
 }

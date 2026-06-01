@@ -10,6 +10,7 @@ import java.time.LocalDate;
         classes = @ConstructorResult(
                 targetClass = ExamRowDto.class,
                 columns = {
+                        @ColumnResult(name = "specialty_for_applicant_id", type = Long.class),
                         @ColumnResult(name = "applicant_id", type = Long.class),
                         @ColumnResult(name = "first_name", type = String.class),
                         @ColumnResult(name = "last_name", type = String.class),
