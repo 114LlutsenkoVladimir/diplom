@@ -1,3 +1,5 @@
+
+
 export function buildDto() {
     return {
         firstName: getVal("firstName"),
@@ -90,4 +92,6 @@ export function buildFindApplicantsByQuotaAndSpecialtyQueryParams() {
     params.append("specialtyId", specialty)
     return params.toString();
 }
+
+
 

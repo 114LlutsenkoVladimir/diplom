@@ -18,13 +18,13 @@ public class AppealService extends AbstractCrudService<Appeal, Long, AppealRepos
     }
 
     public void create(@RequestParam Long specialtyForApplicantId,
-                       String message) {
+                       @RequestParam String appealMessage) {
 
         repository.save(new Appeal(
                 specialtyForApplicantRepository.findById(specialtyForApplicantId)
                         .orElseThrow(
                                 () -> new RuntimeException("Заяву не знайдено")
-                        )
-                , message));
+                        ),
+                appealMessage));
     }
 }

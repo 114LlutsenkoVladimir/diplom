@@ -7,10 +7,7 @@ import com.example.universityadmissionscommittee.dto.applicant.ApplicantCreateDt
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantInitDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyIdAndNameDto;
-import com.example.universityadmissionscommittee.service.ApplicantService;
-import com.example.universityadmissionscommittee.service.BenefitService;
-import com.example.universityadmissionscommittee.service.SpecialtyService;
-import com.example.universityadmissionscommittee.service.SubjectService;
+import com.example.universityadmissionscommittee.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -25,15 +22,18 @@ public class ApplicantController {
     private SpecialtyService specialtyService;
     private SubjectService subjectService;
     private BenefitService benefitService;
+    private AppealService appealService;
 
     public ApplicantController(ApplicantService applicantService,
                                SpecialtyService specialtyService,
                                SubjectService subjectService,
-                               BenefitService benefitService) {
+                               BenefitService benefitService,
+                               AppealService appealService) {
         this.applicantService = applicantService;
         this.specialtyService = specialtyService;
         this.subjectService = subjectService;
         this.benefitService = benefitService;
+        this.appealService = appealService;
     }
 
     @PostMapping("/addApplicant")
@@ -130,6 +130,20 @@ public class ApplicantController {
         return applicantService.getApplicantsBySpecialtyAndQuotaType(specialtyId, type);
     }
 
+    @GetMapping("/addAppeal")
+    public void addAppeal(@RequestParam Long specialtyForApplicantId,
+                          @RequestParam String appealMessage) {
+        appealService.create(specialtyForApplicantId, appealMessage);
+    }
 
+    @GetMapping("/deleteAppeal/{id}")
+    public void deleteAppeal(@PathVariable Long id) {
+        appealService.deleteById(id);
+    }
+
+    @GetMapping("/findAppeal/{id}")
+    public void findAppeal(@PathVariable Long id) {
+        appealService.findById(id);
+    }
    
 }

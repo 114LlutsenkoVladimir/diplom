@@ -7,6 +7,7 @@ import {
     handleUpdateStatus
 } from "./handlers.js";
 import {getUser} from "../user/api.js";
+import {handleAddAppeal} from "../appeal/handlers.js";
 
 export async function initialize(initMap) {
 
@@ -27,6 +28,9 @@ export async function initCommon(initMap) {
     initSpecialtySelect(initMap.allSpecialties)
 
     document.getElementById("submit-btn").addEventListener("click", handleSubmit);
+
+    document.getElementById("addAppealButton").addEventListener("click", handleAddAppeal);
+
 
     document.getElementById("deleteApplicantForm")
         .querySelector("button").addEventListener("click", handleDelete);
