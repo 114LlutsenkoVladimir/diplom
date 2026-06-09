@@ -1,7 +1,8 @@
 import {setupSpecialtyChecker} from "./listener.js";
 import {
-    handleDelete,
-    handleFindApplicant, handleFindApplicantsByQuotaType, handleFindApplicantsByQuotaTypeAndSpecialty,
+    handleDelete, handleDeleteSpecialtyForApplicant,
+    handleFindApplicant,
+    handleFindApplicantOwnApplications, handleFindApplicantsByQuotaType, handleFindApplicantsByQuotaTypeAndSpecialty,
     handleSpecialtySelection,
     handleSubmit,
     handleUpdateStatus
@@ -23,20 +24,18 @@ export async function initialize(initMap) {
 }
 
 export async function initCommon(initMap) {
-    initBenefits(initMap.allBenefits)
-    await initSubjectScoreInputs(initMap.allSubjects)
+    // initBenefits(initMap.allBenefits)
+    // await initSubjectScoreInputs(initMap.allSubjects)
     initSpecialtySelect(initMap.allSpecialties)
 
-    document.getElementById("submit-btn").addEventListener("click", handleSubmit);
+    document.getElementById("findOwnApplicationsBtn")
+        .addEventListener("click", handleFindApplicantOwnApplications);
 
-    document.getElementById("addAppealButton").addEventListener("click", handleAddAppeal);
+    document.getElementById("deleteApplicationBtn")
+        .addEventListener("click", handleDeleteSpecialtyForApplicant);
 
+    // document.getElementById("addAppealButton").addEventListener("click", handleAddAppeal);
 
-    document.getElementById("deleteApplicantForm")
-        .querySelector("button").addEventListener("click", handleDelete);
-
-    document.getElementById("findApplicantForm")
-        .querySelector("button").addEventListener("click", handleFindApplicant);
 }
 
 async function initCommittee(initMap) {

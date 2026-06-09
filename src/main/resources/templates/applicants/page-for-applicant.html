@@ -10,37 +10,31 @@
 
 <main class="app-main">
 
-    <!-- Добавление абитуриента -->
-<!--    <section class="card card-main" id="add-applicant-section">-->
-<!--        <h2 class="card-title">-->
-<!--            <i class="bi bi-person-plus"></i>-->
-<!--            Додати абітурієнта-->
-<!--        </h2>-->
-
-<!--        <div th:replace="applicants/fragments/add-applicant"></div>-->
-<!--    </section>-->
-
-
-    <!-- Поиск + удаление в одной строке -->
     <section class="card-row">
-
         <!-- поиск -->
         <div class="card card-sm">
             <h3 class="card-title">
                 <i class="bi bi-search"></i>
-                Знайти абітурієнта
+                Переглянути свої заяви
             </h3>
-            <div th:replace="applicants/fragments/find-applicant"></div>
+            <div th:replace="applicants/fragments/find-own-applications"></div>
         </div>
 
-        <!-- удаление -->
-<!--        <div class="card card-sm">-->
-<!--            <h3 class="card-title">-->
-<!--                <i class="bi bi-trash"></i>-->
-<!--                Видалити абітурієнта-->
-<!--            </h3>-->
-<!--            <div th:replace="applicants/fragments/delete-applicant"></div>-->
-<!--        </div>-->
+        <div class="card card-sm">
+            <h3 class="card-title">
+                <i class="bi bi-trash"></i>
+                Видалити заяву
+            </h3>
+            <div th:replace="applicants/fragments/delete-application"></div>
+        </div>
+
+        <div class="card card-sm">
+            <h3 class="card-title">
+                <i class="bi bi-shield-exclamation"></i>
+                Подати апеляцію
+            </h3>
+            <div th:replace="appeal/fragments/add-appeal"></div>
+        </div>
 
     </section>
 
@@ -52,7 +46,7 @@
                 Таблиця абітурієнтів
             </h2>
 
-            <div th:replace="applicants/fragments/select-specialty-for-table"></div>
+            <div th:replace="applicants/fragments/select-by-quota-and-specialty"></div>
         </div>
         <div th:replace="applicants/fragments/table"></div>
     </section>

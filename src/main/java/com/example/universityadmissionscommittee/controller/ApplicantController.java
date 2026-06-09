@@ -7,6 +7,8 @@ import com.example.universityadmissionscommittee.dto.applicant.ApplicantCreateDt
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantInitDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyIdAndNameDto;
+import com.example.universityadmissionscommittee.exception.applicant.ApplicantNotFoundException;
+import com.example.universityadmissionscommittee.exception.specialty.SpecialtyNotFoundException;
 import com.example.universityadmissionscommittee.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +19,26 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/applicants")
-public class ApplicantController {
+public class ApplicantController implements GetApplicantId {
     private ApplicantService applicantService;
     private SpecialtyService specialtyService;
     private SubjectService subjectService;
     private BenefitService benefitService;
     private AppealService appealService;
+    private SpecialtyForApplicantService specialtyForApplicantService;
 
     public ApplicantController(ApplicantService applicantService,
                                SpecialtyService specialtyService,
                                SubjectService subjectService,
                                BenefitService benefitService,
-                               AppealService appealService) {
+                               AppealService appealService,
+                               SpecialtyForApplicantService specialtyForApplicantService) {
         this.applicantService = applicantService;
         this.specialtyService = specialtyService;
         this.subjectService = subjectService;
         this.benefitService = benefitService;
         this.appealService = appealService;
+        this.specialtyForApplicantService = specialtyForApplicantService;
     }
 
     @PostMapping("/addApplicant")
@@ -41,6 +46,11 @@ public class ApplicantController {
         Applicant applicant = applicantService.createApplicantFromDto(dto);
         Long id = applicant.getId();
         return applicantService.findApplicantByKeyAttributes(id, null, null);
+    }
+
+    @GetMapping("/getUserApplicantId")
+    public Long getUserApplicantId(HttpSession session) {
+        return getApplicantId(session);
     }
 
     @GetMapping("/initializeApplicantPage")
@@ -98,8 +108,12 @@ public class ApplicantController {
     public ApplicantReportGrouped findApplicant(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) String phoneNumber
+            @RequestParam(required = false) String phoneNumber,
+            HttpSession session
     ) {
+        Long appId = getApplicantId(session);
+        if(appId < 0)
+            return applicantService.findApplicantByKeyAttributes(appId, null, null);
         return applicantService.findApplicantByKeyAttributes(id, email, phoneNumber);
     }
 
@@ -145,5 +159,16 @@ public class ApplicantController {
     public void findAppeal(@PathVariable Long id) {
         appealService.findById(id);
     }
-   
+
+    @DeleteMapping("/deleteSpecialtyForApplicant/{id}")
+    public ResponseEntity<Void> deleteSpecialtyForApplicant(@PathVariable Long id,
+                                            HttpSession session) {
+        Long appId = getApplicantId(session);
+        SpecialtyForApplicant application = specialtyForApplicantService.findById(id);
+        if(application == null || (appId > 0
+                && !application.getApplicant().getId().equals(appId)))
+            throw new ApplicantNotFoundException("Заявку не знайдено");
+//        specialtyForApplicantService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

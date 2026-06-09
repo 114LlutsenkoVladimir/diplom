@@ -6,9 +6,9 @@ import {
     getSelectedSpecialtiesFromDOM
 } from "./buildDto.js";
 import {
-    deleteApplicant,
+    deleteApplicant, deleteSpecialtyForApplicant,
     findApplicantByKeyAttributes,
-    findApplicantByQuotaType, findApplicantByQuotaTypeAndSpecialty,
+    findApplicantByQuotaType, findApplicantByQuotaTypeAndSpecialty, getApplicantUserId,
     sendApplicant,
     updateApplicantStatus
 } from "./api.js";
@@ -17,6 +17,7 @@ import {clearDeleteForm, clearFindForm, clearSendForm, clearUpdateStatusForm} fr
 import {showError} from "../errorPopup/errorPopup.js";
 import {renderPriorities} from "./render.js";
 import {checkFindApplicantForm} from "./ckeckAppicantForm.js";
+import {clearForm} from "../utils/clearForm.js";
 
 export async function handleSubmit() {
     try {
@@ -57,6 +58,28 @@ export async function handleFindApplicant() {
         const report = await findApplicantByKeyAttributes(params)
         renderApplicantTable(report)
         clearFindForm()
+    } catch (error) {
+        showError(error.message)
+    }
+}
+
+export async function handleFindApplicantOwnApplications() {
+    try {
+        const params = new URLSearchParams();
+        const id = await getApplicantUserId();
+        params.append("id", id);
+        const report = await findApplicantByKeyAttributes(params)
+        renderApplicantTable(report)
+    } catch (error) {
+        showError(error.message)
+    }
+}
+
+export async function handleDeleteSpecialtyForApplicant() {
+    try {
+        const id = document.getElementById("deleteApplicationInput").value;
+        await deleteSpecialtyForApplicant(id)
+        clearForm("deleteApplication")
     } catch (error) {
         showError(error.message)
     }

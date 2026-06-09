@@ -32,6 +32,15 @@ export async function getApplicantInitDto() {
     return await response.json();
 }
 
+export async function getApplicantUserId() {
+    const response = await fetch("getUserApplicantId")
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
+    return await response.json();
+}
+
 export async function findApplicantByKeyAttributes(params) {
     const response = await fetch("findApplicant?" + params)
     if (!response.ok) {
@@ -48,6 +57,16 @@ export async function updateApplicantStatus(params) {
         throw new Error(err.message);
     }
     return await response.json();
+}
+
+export async function deleteSpecialtyForApplicant(id) {
+    const response = await fetch(`deleteSpecialtyForApplicant/${id}`, {
+        method: "DELETE"
+    })
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
 }
 
 
