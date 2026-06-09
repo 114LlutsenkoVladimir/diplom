@@ -19,8 +19,9 @@ import {renderPriorities} from "./render.js";
 import {checkFindApplicantForm} from "./ckeckAppicantForm.js";
 import {clearForm} from "../utils/clearForm.js";
 
-export async function handleSubmit() {
+export async function handleSubmit(event) {
     try {
+        event.preventDefault();
         const dto = buildDto();
         const result = await sendApplicant(dto);
         renderApplicantTable(result);
@@ -30,8 +31,9 @@ export async function handleSubmit() {
     }
 }
 
-export async function handleDelete() {
+export async function handleDelete(event) {
     try {
+        event.preventDefault()
         const id = document.getElementById("deleteApplicantInput").value;
         await deleteApplicant(id);
         clearDeleteForm();
@@ -75,8 +77,9 @@ export async function handleFindApplicantOwnApplications() {
     }
 }
 
-export async function handleDeleteSpecialtyForApplicant() {
+export async function handleDeleteSpecialtyForApplicant(event) {
     try {
+        event.preventDefault();
         const id = document.getElementById("deleteApplicationInput").value;
         await deleteSpecialtyForApplicant(id)
         clearForm("deleteApplication")
@@ -85,8 +88,9 @@ export async function handleDeleteSpecialtyForApplicant() {
     }
 }
 
-export async function handleUpdateStatus() {
+export async function handleUpdateStatus(event) {
     try {
+        event.preventDefault()
         const params = buildUpdateApplicantStatusQueryParams()
         const report = await updateApplicantStatus(params)
         renderApplicantTable(report)

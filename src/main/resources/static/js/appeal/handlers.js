@@ -3,8 +3,9 @@ import {fetchAddAppeal} from "./api.js";
 import {buildAddAppealQueryParams} from "./buildDto.js";
 import {clearForm} from "../utils/clearForm.js";
 
-export async function handleAddAppeal() {
+export async function handleAddAppeal(event) {
     try {
+        event.preventDefault()
         const params = buildAddAppealQueryParams();
         await fetchAddAppeal(params);
         clearForm("addAppealForm");

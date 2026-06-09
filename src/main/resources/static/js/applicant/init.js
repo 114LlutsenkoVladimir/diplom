@@ -17,6 +17,8 @@ export async function initialize(initMap) {
     const user = await getUser();
     if(user === "committee" || user === "admin")
         await initCommittee(initMap)
+    else if(user === "user")
+        await initApplicant(initMap)
 
     document.addEventListener("DOMContentLoaded", () => {
         setupSpecialtyChecker();
@@ -24,31 +26,48 @@ export async function initialize(initMap) {
 }
 
 export async function initCommon(initMap) {
-    // initBenefits(initMap.allBenefits)
-    // await initSubjectScoreInputs(initMap.allSubjects)
     initSpecialtySelect(initMap.allSpecialties)
 
+}
+
+async function initApplicant(initMap) {
     document.getElementById("findOwnApplicationsBtn")
         .addEventListener("click", handleFindApplicantOwnApplications);
 
-    document.getElementById("deleteApplicationBtn")
-        .addEventListener("click", handleDeleteSpecialtyForApplicant);
+    document.getElementById("deleteApplication")
+        .addEventListener("submit", (event) => {
+            handleDeleteSpecialtyForApplicant(event)
+        });
 
-    // document.getElementById("addAppealButton").addEventListener("click", handleAddAppeal);
-
+    document.getElementById("addAppealForm")
+        .addEventListener("submit", (event) => {
+            handleAddAppeal(event)
+        });
 }
+
 
 async function initCommittee(initMap) {
     initStatusSelect(initMap.allStatuses)
     initQuotaSelect(initMap.allQuotaTypes)
-    document.getElementById("quota-type-select")
-        .addEventListener("change", handleFindApplicantsByQuotaType)
+    initBenefits(initMap.allBenefits)
+    await initSubjectScoreInputs(initMap.allSubjects)
 
-    document.getElementById("select-by-specialty-and-quota")
-        .addEventListener("click", handleFindApplicantsByQuotaTypeAndSpecialty)
+    document.getElementById("addApplicantForm")
+        .addEventListener('submit', (event) => {
+        handleSubmit(event);
+    });
 
     document.getElementById("updateApplicantStatusForm")
-        .querySelector("button").addEventListener("click", handleUpdateStatus);
+        .addEventListener('submit', (event) => {
+            handleUpdateStatus(event)
+        });
+
+    document.getElementById("findApplicantBtn").addEventListener("click", handleFindApplicant)
+
+    document.getElementById("deleteApplicantForm")
+        .addEventListener("submit", (event) => {
+            handleDelete(event)
+        })
 }
 
 function initBenefits(benefits) {
