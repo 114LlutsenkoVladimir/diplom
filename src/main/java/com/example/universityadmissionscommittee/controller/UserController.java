@@ -2,6 +2,7 @@ package com.example.universityadmissionscommittee.controller;
 
 
 
+
 import com.example.universityadmissionscommittee.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class UserController {
     public String setUserOnPassword(@RequestParam String password, HttpSession session) {
         String role = service.getUser(password);
         session.setAttribute("user", role);
+        session.setAttribute("id", service.getIdIfApplicant());
         return role;
     }
 

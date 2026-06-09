@@ -16,7 +16,7 @@ public class PageController {
     @GetMapping("/")
     public String initial(HttpSession session) {
         session.setAttribute("user", "user");
-        return "redirect:/applicants/";
+        return usersPage();
     }
 
     @GetMapping("/applicants/")
