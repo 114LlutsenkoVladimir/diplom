@@ -1,4 +1,4 @@
-
+import {handleSpecialtySelect} from "./handlers";
 
 
 export async function initialize(initMap) {
@@ -9,9 +9,9 @@ export async function initialize(initMap) {
 
 }
 
-
 export async function initCommon(initMap) {
     initSpecialtySelect(initMap.allSpecialties, "specialtySelect")
+    document.getElementById("specialty-select").addEventListener("click", handleSpecialtySelect)
 }
 
 function initSpecialtySelect(specialties) {

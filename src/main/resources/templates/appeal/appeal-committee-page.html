@@ -13,14 +13,6 @@
     <!-- Три формы в строку: поиск / удаление / обновление -->
     <section class="card-row">
 
-        <!-- поиск -->
-        <div class="card card-sm">
-            <h3 class="card-title">
-                <i class="bi bi-search"></i>
-                Знайти абітурієнта
-            </h3>
-            <div th:replace="applicants/fragments/find-applicant"></div>
-        </div>
 
         <!-- удаление -->
         <div class="card card-sm">
@@ -31,14 +23,6 @@
             <div th:replace="applicants/fragments/delete-applicant"></div>
         </div>
 
-        <!-- обновление статуса -->
-        <div class="card card-sm">
-            <h3 class="card-title">
-                <i class="bi bi-arrow-repeat"></i>
-                Оновити статус
-            </h3>
-            <div th:replace="applicants/fragments/update-applicant-status"></div>
-        </div>
 
     </section>
 
@@ -51,10 +35,10 @@
                 Таблиця абітурієнтів
             </h2>
 
-            <div th:replace="applicants/fragments/select-by-quota-and-specialty"></div>
+            <div th:replace="applicants/fragments/select-specialty-for-table"></div>
         </div>
 
-        <div th:replace="applicants/fragments/table"></div>
+        <div th:replace="appeal/fragments/table"></div>
     </section>
 </main>
 </body>
