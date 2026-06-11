@@ -1,4 +1,4 @@
-import {handleSpecialtySelect} from "./handlers";
+import {handleSpecialtySelect, handleUpdateAppealStatus} from "./handlers.js";
 
 
 export async function initialize(initMap) {
@@ -9,9 +9,27 @@ export async function initialize(initMap) {
 
 }
 
+
+
 export async function initCommon(initMap) {
     initSpecialtySelect(initMap.allSpecialties, "specialtySelect")
+    initAppealStatusSelect(initMap.allAppealStatuses)
     document.getElementById("specialty-select").addEventListener("click", handleSpecialtySelect)
+    document.getElementById("updateAppealStatusForm").addEventListener("submit", (event) => {
+        handleUpdateAppealStatus(event)
+    })
+
+}
+
+function initAppealStatusSelect(appeals) {
+    const select = document.getElementById('appealStatusSelect');
+
+    appeals.forEach(appeal => {
+        const option = document.createElement('option');
+        option.value = appeal.code;
+        option.textContent = appeal.name;
+        select.appendChild(option);
+    });
 }
 
 function initSpecialtySelect(specialties) {

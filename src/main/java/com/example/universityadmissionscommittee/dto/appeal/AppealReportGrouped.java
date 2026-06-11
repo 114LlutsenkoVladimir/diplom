@@ -13,7 +13,7 @@ public class AppealReportGrouped {
     Map<Long, List<AppealReportDto>> report = new HashMap<>();
 
     public AppealReportGrouped(List<AppealReportDto> dtos) {
-        if (dtos == null || dtos.isEmpty())
+        if (dtos == null)
             throw new SpecialtyNotFoundException();
 
         buildReport(dtos);
@@ -28,7 +28,7 @@ public class AppealReportGrouped {
         report = dtos.stream().collect(Collectors.groupingBy(AppealReportDto::specialtyId));
     }
 
-    public Map<Long, String> getSpecialtyNamesNames() {
+    public Map<Long, String> getSpecialtyNames() {
         return specialtyNames;
     }
 

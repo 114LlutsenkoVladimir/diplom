@@ -13,16 +13,18 @@ import java.util.List;
 public interface AppealRepository extends JpaRepositoryImplementation<Appeal, Long> {
     @Query("""
         SELECT new com.example.universityadmissionscommittee.dto.appeal.AppealReportDto(
+            a.id,
             a.specialtyForApplicant.applicant.id,
             a.specialtyForApplicant.applicant.firstName,
             a.specialtyForApplicant.specialty.id,
             a.specialtyForApplicant.specialty.name,
             a.specialtyForApplicant.id,
             a.specialtyForApplicant.applicantStatus,
-            a.appealStatus
+            a.appealStatus,
+            a.message
         )
         FROM Appeal a
-        JOIN a.specialtyForApplicant.specialty s
+        LEFT JOIN a.specialtyForApplicant.specialty s
         WHERE s.id IN :specialtyIds
     """)
     List<AppealReportDto> appealsBySpecialties(@Param("specialtyIds") List<Long> specialtyIds);

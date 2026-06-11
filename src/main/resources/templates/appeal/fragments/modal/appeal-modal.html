@@ -1,24 +1,23 @@
-<div class="modal fade" id="appealModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div id="custom-appeal-modal" class="modal" style="display:none">
+    <div class="modal-content" style="max-width: 800px;">
+        <span id="appeal-close-btn" class="close-btn" role="button">&times;</span>
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="dynamicModalTitle">Загрузка...</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
+        <h4 id="dynamicModalTitle" style="margin-top: 0;">Загрузка...</h4>
+        <hr>
 
-            <div class="modal-body">
-                <p id="appealModalContent">Подождите...</p>
-                <p id="appealModalContent_applicantId"></p>
-                <p id="appealModalContent_applicantFullName"></p>
-                <p id="appealModalContent_specialtyForApplicantId"></p>
-                <textarea id="appealModalContent_appealMessage" rows="6" class="form-control" readonly="true"></textarea>
-            </div>
+        <div class="modal-info-box" style="text-align: left; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 15px;">
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-            </div>
+            <p id="appealModalContent" style="margin: 0;">Подождите...</p>
+
+            <div id="appealModalContent_applicantId" style="margin-bottom: 5px;"></div>
+            <div id="appealModalContent_applicantFullName" style="margin-bottom: 5px;"></div>
+            <div id="appealModalContent_specialtyForApplicantId"></div>
 
         </div>
+
+
+        <label style="text-align: left">Повідомлення апеляції:</label>
+        <textarea id="appealModalContent_appealMessage" rows="6" class="form-control" readonly="true"></textarea>
+
     </div>
 </div>

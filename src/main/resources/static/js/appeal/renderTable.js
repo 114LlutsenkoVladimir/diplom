@@ -19,6 +19,7 @@ export function renderAppealTable(report) {
         thead.className = "table-light";
         thead.innerHTML = `
             <tr>
+                <th>Id Апеляції</th>
                 <th>Id Абітурієнта</th>
                 <th>Прізвище</th>
                 <th>Id Заяви</th>
@@ -34,11 +35,20 @@ export function renderAppealTable(report) {
         applicants.forEach(appeal => {
             const row = document.createElement("tr");
             row.innerHTML = `
+                <td>${appeal.appealId}</td>
                 <td>${appeal.applicantId}</td>
-                <td>${appeal.applicantFullName}</td>
+                <td>${appeal.fullName}</td>
                 <td>${appeal.specialtyForApplicantId}</td>
-                <td>${appeal.lastName}</td>
-                <td>${appeal.specialtyForApplicantStatus}</td>
+                <td>
+                    <button type="button" class="btn btn-outline btn-sm js-open-modal-btn" 
+                        data-app-id="${appeal.applicantId}"
+                        data-full-name="${appeal.fullName}"
+                        data-spec-app-id="${appeal.specialtyForApplicantId}"
+                        data-message="${appeal.message || 'Повідомлення відсутнє'}">
+                        Подивитись
+                    </button>
+                </td>
+                <td>${appeal.applicantStatus}</td>
                 <td>${appeal.appealStatus}</td>
             `;
             tbody.appendChild(row);

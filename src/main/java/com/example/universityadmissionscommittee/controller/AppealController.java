@@ -1,15 +1,14 @@
 package com.example.universityadmissionscommittee.controller;
 
+import com.example.universityadmissionscommittee.data.enums.AppealStatus;
 import com.example.universityadmissionscommittee.dto.appeal.AppealInitDto;
 import com.example.universityadmissionscommittee.dto.appeal.AppealReportGrouped;
-import com.example.universityadmissionscommittee.dto.specialty.SpecialtyInitDto;
-import com.example.universityadmissionscommittee.dto.specialty.SpecialtyReportGrouped;
 import com.example.universityadmissionscommittee.service.AppealService;
 import com.example.universityadmissionscommittee.service.SpecialtyService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/appeals")
@@ -26,11 +25,18 @@ public class AppealController {
 
     @GetMapping("/initializeAppealPage")
     public AppealInitDto initialize() {
-        return new AppealInitDto(specialtyService.allIdAndName());
+        return new AppealInitDto(specialtyService.allIdAndName(),
+                new ArrayList<>(List.of(AppealStatus.values())));
     }
 
     @GetMapping("/filterAppealsBySpecialty/{specialtyId}")
     public AppealReportGrouped selectSpecialty(@PathVariable Long specialtyId) {
         return appealService.appealsByOneSpecialty(specialtyId);
+    }
+
+    @GetMapping("/updateAppealStatus")
+    public void updateAppealStatus(@RequestParam AppealStatus status,
+                                   @RequestParam Long appealId) {
+        appealService.updateAppealStatus(appealId, status);
     }
 }

@@ -51,4 +51,9 @@ public class PageController {
             default -> "redirect:/applicants/";
         };
     }
+
+    @GetMapping("/appeals/")
+    public String appealPage(HttpSession session) {
+        return "appeal/appeal-committee-page";
+    }
 }
