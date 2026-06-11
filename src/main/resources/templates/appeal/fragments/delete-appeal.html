@@ -1,13 +1,10 @@
-<div id="deleteAppealForm" class="form-section" xmlns="http://www.w3.org/1999/html">
-    <div class="form-stack">
-        <div class="form-field">
-            <label for="deleteAppeal_specialtyForApplicantId">Id заяви</label>
-            <input type="number" id="deleteAppeal_specialtyForApplicantId" placeholder="ID" required/>
-        </div>
+<form id="findAppealById" class="form-inline">
+    <div class="form-field">
+        <label for="appealId">ID апеляції</label>
+        <input type="number" id="appealId" required>
     </div>
-
-    <button type="submit" id="deleteAppealButton" class="btn-outline">
-        <i class="bi bi-shield-exclamation"></i>
-        Видалити апеляцію
+    <button type="submit" id="findAppealByIdBtn" class="btn-outline">
+        <i class="bi bi-arrow-repeat"></i>
+        Оновити
     </button>
-</div>
+</form>

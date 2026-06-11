@@ -61,4 +61,9 @@ public class AppealService extends AbstractCrudService<Appeal, Long, AppealRepos
         appeal.setAppealStatus(status);
         save(appeal);
     }
+
+    public AppealReportGrouped findByIdDto(Long id) {
+        findById(id);
+        return new AppealReportGrouped(repository.findAppealById(id));
+    }
 }

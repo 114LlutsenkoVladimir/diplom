@@ -28,4 +28,22 @@ public interface AppealRepository extends JpaRepositoryImplementation<Appeal, Lo
         WHERE s.id IN :specialtyIds
     """)
     List<AppealReportDto> appealsBySpecialties(@Param("specialtyIds") List<Long> specialtyIds);
+
+
+    @Query("""
+        SELECT new com.example.universityadmissionscommittee.dto.appeal.AppealReportDto(
+            a.id,
+            a.specialtyForApplicant.applicant.id,
+            a.specialtyForApplicant.applicant.firstName,
+            a.specialtyForApplicant.specialty.id,
+            a.specialtyForApplicant.specialty.name,
+            a.specialtyForApplicant.id,
+            a.specialtyForApplicant.applicantStatus,
+            a.appealStatus,
+            a.message
+        )
+        FROM Appeal a
+        where a.id = :appealId
+    """)
+    List<AppealReportDto> findAppealById(@Param("appealId") Long appealId);
 }

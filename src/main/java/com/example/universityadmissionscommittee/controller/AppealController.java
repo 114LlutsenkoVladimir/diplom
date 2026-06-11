@@ -39,4 +39,9 @@ public class AppealController {
                                    @RequestParam Long appealId) {
         appealService.updateAppealStatus(appealId, status);
     }
+
+    @GetMapping("/findById/{appealId}")
+    public AppealReportGrouped findById(@PathVariable Long appealId) {
+        return appealService.findByIdDto(appealId);
+    }
 }
