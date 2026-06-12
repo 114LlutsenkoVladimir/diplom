@@ -1,6 +1,7 @@
 package com.example.universityadmissionscommittee.controller;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,21 +21,28 @@ public class PageController {
     }
 
     @GetMapping("/applicants/")
-    public String applicantPage(HttpSession session) {
+    public String applicantPage(HttpSession session, HttpServletRequest request) {
         return switch ((String) session.getAttribute("user")) {
             case "admin"     -> "applicants/admin-page";
             case "committee" -> "applicants/committee-page";
-            default          -> "applicants/page-for-applicant";
+            case "applicant"          -> "applicants/page-for-applicant";
+            default -> {
+                String referer = request.getHeader("Referer");
+                yield "redirect:" + (referer != null ? referer : "/");
+            }
         };
 
     }
 
     @GetMapping("/specialties/")
-    public String specialtyPage(HttpSession session) {
+    public String specialtyPage(HttpSession session, HttpServletRequest request) {
         return switch ((String) session.getAttribute("user")) {
             case "admin"     -> "specialties/admin-page";
             case "committee" -> "specialties/committee-page";
-            default          -> "redirect:/applicants/";
+            default -> {
+                String referer = request.getHeader("Referer");
+                yield "redirect:" + (referer != null ? referer : "/");
+            }
         };
     }
 
@@ -45,10 +53,13 @@ public class PageController {
 
 
     @GetMapping("/reports/")
-    public String reportPage(HttpSession session) {
+    public String reportPage(HttpSession session, HttpServletRequest request) {
         return switch ((String) session.getAttribute("user")) {
             case "admin", "committee" -> "reports/report";
-            default -> "redirect:/applicants/";
+            default -> {
+                String referer = request.getHeader("Referer");
+                yield "redirect:" + (referer != null ? referer : "/");
+            }
         };
     }
 

@@ -30,7 +30,7 @@ public class UserService {
                 try {
                     Applicant applicant = applicantService.findByEmail(password);
                     applicantId = applicant.getId();
-                    return "user";
+                    return "applicant";
                 } catch (ApplicantNotFoundException e) {
                     throw new IncorrectPasswordException();
                 }

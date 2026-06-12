@@ -16,6 +16,16 @@ export async function getAppealsBySpecialty(id) {
     return response.json();
 }
 
+export async function findAppealById(id) {
+    const response = await fetch("findById/" + id)
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
+    return response.json();
+}
+
+
 export async function getAppealInitMap() {
     const response = await fetch("initializeAppealPage")
     if (!response.ok) {
@@ -24,6 +34,17 @@ export async function getAppealInitMap() {
     }
     return response.json();
 }
+
+export async function deleteAppeal(id) {
+    const response = await fetch("deleteById/" + id,{
+        method: "DELETE"
+    })
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message);
+    }
+}
+
 
 export async function updateAppealStatus(params) {
     const response = await fetch("updateAppealStatus?" + params)

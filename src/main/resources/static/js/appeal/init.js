@@ -1,4 +1,4 @@
-import {handleSpecialtySelect, handleUpdateAppealStatus} from "./handlers.js";
+import {handleDeleteAppeal, handleFindAppeal, handleSpecialtySelect, handleUpdateAppealStatus} from "./handlers.js";
 
 
 export async function initialize(initMap) {
@@ -18,6 +18,8 @@ export async function initCommon(initMap) {
     document.getElementById("updateAppealStatusForm").addEventListener("submit", (event) => {
         handleUpdateAppealStatus(event)
     })
+    document.getElementById("findAppealForm").addEventListener("submit", (event) => handleFindAppeal(event))
+    document.getElementById("deleteAppealById").addEventListener("submit", (event) => handleDeleteAppeal(event))
 
 }
 
@@ -31,6 +33,8 @@ function initAppealStatusSelect(appeals) {
         select.appendChild(option);
     });
 }
+
+
 
 function initSpecialtySelect(specialties) {
     const select = document.getElementById('specialty-select');

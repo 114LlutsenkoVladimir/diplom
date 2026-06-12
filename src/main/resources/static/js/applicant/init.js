@@ -17,7 +17,7 @@ export async function initialize(initMap) {
     const user = await getUser();
     if(user === "committee" || user === "admin")
         await initCommittee(initMap)
-    else if(user === "user")
+    else if(user === "applicant")
         await initApplicant(initMap)
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -27,7 +27,10 @@ export async function initialize(initMap) {
 
 export async function initCommon(initMap) {
     initSpecialtySelect(initMap.allSpecialties)
-
+    initQuotaSelect(initMap.allQuotaTypes)
+    document.getElementById("quota-type-select").addEventListener("click", handleFindApplicantsByQuotaType)
+    document.getElementById("select-by-specialty-and-quota").addEventListener("click",
+        handleFindApplicantsByQuotaTypeAndSpecialty)
 }
 
 async function initApplicant(initMap) {
@@ -48,7 +51,6 @@ async function initApplicant(initMap) {
 
 async function initCommittee(initMap) {
     initStatusSelect(initMap.allStatuses)
-    initQuotaSelect(initMap.allQuotaTypes)
     initBenefits(initMap.allBenefits)
     await initSubjectScoreInputs(initMap.allSubjects)
 
@@ -137,6 +139,7 @@ function initQuotaSelect(quotaTypes) {
         option.textContent = quotaType.name;
         select.appendChild(option);
     });
+
 }
 
 function initStatusSelect(statuses) {

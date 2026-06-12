@@ -55,6 +55,12 @@ public class AppealService extends AbstractCrudService<Appeal, Long, AppealRepos
         );
     }
 
+    @Override
+    public void deleteById(Long id) {
+        findById(id);
+        repository.deleteById(id);
+    }
+
     @Transactional
     public void updateAppealStatus(Long appealId, AppealStatus status) {
         Appeal appeal = findById(appealId);

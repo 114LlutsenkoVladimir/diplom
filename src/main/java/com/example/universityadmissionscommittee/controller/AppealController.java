@@ -44,4 +44,9 @@ public class AppealController {
     public AppealReportGrouped findById(@PathVariable Long appealId) {
         return appealService.findByIdDto(appealId);
     }
+
+    @DeleteMapping("/deleteById/{appealId}")
+    public void deleteById(@PathVariable Long appealId) {
+        appealService.deleteById(appealId);
+    }
 }

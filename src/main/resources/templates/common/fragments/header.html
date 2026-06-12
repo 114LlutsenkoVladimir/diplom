@@ -14,12 +14,25 @@
 <body>
 <nav class="app-header">
     <div class="app-header-inner">
-        <div class="logo">
+        <div class="logo" th:if="${session.user == 'applicant'}">
+            <i class="bi bi-mortarboard"></i>
+            <span>Абітурієнт</span>
+        </div>
+        <div class="logo" th:if="${session.user == 'committee'}">
             <i class="bi bi-mortarboard"></i>
             <span>Приймальна комісія</span>
         </div>
+        <div class="logo" th:if="${session.user == 'admin'}">
+            <i class="bi bi-mortarboard"></i>
+            <span>Адміністратор</span>
+        </div>
+        <div class="logo" th:if="${session.user == 'user'}">
+            <i class="bi bi-mortarboard"></i>
+            <span>Хто я?</span>
+        </div>
+
         <ul class="nav-links header-bar">
-            <li>
+            <li th:if="${session.user != 'user'}">
                 <a href="/applicants/">
                     <i class="bi bi-people"></i>
                     Абітурієнти

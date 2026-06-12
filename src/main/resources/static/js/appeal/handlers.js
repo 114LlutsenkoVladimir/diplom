@@ -1,5 +1,5 @@
 import {showError} from "../errorPopup/errorPopup.js";
-import {fetchAddAppeal, getAppealsBySpecialty, updateAppealStatus} from "./api.js";
+import {deleteAppeal, fetchAddAppeal, findAppealById, getAppealsBySpecialty, updateAppealStatus} from "./api.js";
 import {buildAddAppealQueryParams} from "./buildDto.js";
 import {clearForm} from "../utils/clearForm.js";
 import {renderAppealTable} from "./renderTable.js";
@@ -28,6 +28,31 @@ export async function handleSpecialtySelect() {
 }
 
 
+export async function handleDeleteAppeal(event) {
+    try {
+        event.preventDefault();
+        const appealId = document.getElementById("deleteAppealById_appealId").value
+        await deleteAppeal(appealId)
+        clearForm("deleteAppealById")
+    } catch (error) {
+        showError(error.message);
+    }
+}
+
+export async function handleFindAppeal(event) {
+    try {
+        event.preventDefault();
+        const appealId = document.getElementById("findAppeal_appealId").value
+        const response = await findAppealById(appealId)
+        renderAppealTable(response)
+        clearForm("findAppealForm")
+    } catch (error) {
+        showError(error.message);
+    }
+}
+
+
+
 export async function handleUpdateAppealStatus(event) {
     try {
         event.preventDefault();
@@ -40,6 +65,7 @@ export async function handleUpdateAppealStatus(event) {
         params.append("appealId", appealId)
 
         await updateAppealStatus(params)
+        clearForm("updateAppealStatusForm")
     } catch (error) {
         showError(error.message);
     }
