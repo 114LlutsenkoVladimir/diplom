@@ -65,6 +65,7 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
                 ApplicantNotFoundException::new
         );
     }
+
     @Transactional(readOnly = true)
     public ApplicantReportGrouped getApplicantsBySpecialties(List<Long> specialtyIds) {
         List<ExamRowDto> examRows = examResultRepository.examRowData(specialtyIds);
@@ -92,6 +93,10 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
         return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuota(type));
     }
 
+    @Transactional(readOnly = true)
+    public ApplicantReportGrouped getApplicantsByQuota(QuotaType type, int year) {
+        return new ApplicantReportGrouped(examResultRepository.findExamRowsByQuota(type, year));
+    }
 
 
     @Transactional(readOnly = true)

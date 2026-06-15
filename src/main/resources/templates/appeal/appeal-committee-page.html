@@ -16,7 +16,7 @@
     <section class="card-row">
         <div class="card card-sm">
             <h3 class="card-title">
-                <i class="bi bi-trash"></i>
+                <i class="bi bi-arrow-repeat"></i>
                 Оновити статус
             </h3>
             <div th:replace="appeal/fragments/update-appeal-status"></div>
@@ -26,21 +26,27 @@
 
         <div class="card card-sm">
             <h3 class="card-title">
-                <i class="bi bi-trash"></i>
-                Оновити статус
+                <i class="bi bi-search"></i>
+                Знайти апеляцію
             </h3>
             <div th:replace="appeal/fragments/find-appeal"></div>
         </div>
 
 
-
-
         <div class="card card-sm">
             <h3 class="card-title">
                 <i class="bi bi-trash"></i>
-                Оновити статус
+                Видалити апеляцію
             </h3>
             <div th:replace="appeal/fragments/delete-appeal"></div>
+        </div>
+
+        <div class="card card-sm">
+            <h3 class="card-title">
+                <i class="bi bi-shield-exclamation"></i>
+                Подати апеляцію
+            </h3>
+            <div th:replace="appeal/fragments/add-appeal"></div>
         </div>
     </section>
 
@@ -48,7 +54,7 @@
         <div class="card-header-inline">
             <h2 class="card-title">
                 <i class="bi bi-table"></i>
-                Таблиця абітурієнтів
+                Таблиця апеляцій
             </h2>
 
             <div th:replace="applicants/fragments/select-specialty-for-table"></div>

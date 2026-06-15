@@ -32,11 +32,9 @@ public class Subject {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    /** Обратная сторона M:N. Владелец — Specialty (там @JoinTable). */
-    @ManyToMany(mappedBy = "neededSubjects", fetch = FetchType.LAZY)
-    private final Set<Specialty> specialties = new HashSet<>();
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SubjectForSpecialty> specialtyWeights = new HashSet<>();
 
-    /** Обратная сторона 1:N. Владелец FK — ExamResult. */
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY)
     private final Set<ExamResult> examResults = new HashSet<>();
 
@@ -46,17 +44,13 @@ public class Subject {
         this.name = Objects.requireNonNull(name, "name");
     }
 
-    /* ===== Хелперы для поддержания двусторонних связей (package-private) =====
-       Вызываются из Specialty.add/removeSubject и ExamResult.linkSubject.
-       Не делаем их public, чтобы не нарушать инварианты с «владельческой» стороны.
-     */
 
-    void _addSpecialty(Specialty specialty) {
-        specialties.add(Objects.requireNonNull(specialty, "specialty"));
+    public Set<SubjectForSpecialty> getSpecialtyWeights() {
+        return specialtyWeights;
     }
 
-    void _removeSpecialty(Specialty specialty) {
-        specialties.remove(Objects.requireNonNull(specialty, "specialty"));
+    public void setSpecialtyWeights(Set<SubjectForSpecialty> specialtyWeights) {
+        this.specialtyWeights = specialtyWeights;
     }
 
     void _addExamResult(ExamResult examResult) {
@@ -72,11 +66,8 @@ public class Subject {
     public Long getId() { return id; }
 
     public String getName() { return name; }
-    public void setName(String name) { this.name = Objects.requireNonNull(name, "name"); }
 
-    public Set<Specialty> getSpecialties() {
-        return Collections.unmodifiableSet(specialties);
-    }
+    public void setName(String name) { this.name = Objects.requireNonNull(name, "name"); }
 
     public Set<ExamResult> getExamResults() {
         return Collections.unmodifiableSet(examResults);

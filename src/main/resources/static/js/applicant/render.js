@@ -5,7 +5,7 @@ export function renderSpecialties(specialties, containerId = "available-specialt
     container.innerHTML = "";
 
     if (specialties.length === 0) {
-        container.innerHTML = "<p>Нет подходящих специальностей</p>";
+        container.innerHTML = "<p>Немає підходящих спеціальностей</p>";
         return;
     }
 
@@ -39,6 +39,6 @@ export function renderPriorities(selected) {
         const id = parseInt(checkbox.dataset.id);
         const span = label.querySelector('.priority-display');
         const item = selected[id];
-        span.textContent = item ? `(приоритет: ${item})` : '';
+        span.textContent = item ? `(пріорітет: ${item})` : '';
     });
 }

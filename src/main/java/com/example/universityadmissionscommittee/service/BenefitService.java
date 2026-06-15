@@ -15,7 +15,7 @@ public class BenefitService extends AbstractCrudService<Benefit, Long, BenefitRe
 
     public List<BenefitIdAndName> toIdAndNameDto(List<Benefit> benefits) {
         return benefits.stream()
-                .map(b -> new BenefitIdAndName(b.getName(), b.getId())).toList();
+                .map(b -> new BenefitIdAndName(b.getName(), b.getId(), b.getType().getName())).toList();
     }
 
     public List<BenefitIdAndName> allIdAndName() {

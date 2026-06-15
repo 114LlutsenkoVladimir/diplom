@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(
@@ -48,13 +45,8 @@ public class Specialty {
     @Column(name = "number_of_contract_places", nullable = false)
     private int numberOfContractPlaces;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "subject_for_specialty",
-            joinColumns = @JoinColumn(name = "specialty_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id")
-    )
-    private Set<Subject> neededSubjects = new HashSet<>();
+    @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SubjectForSpecialty> subjectWeights = new HashSet<>();
 
     @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<SpecialtyForApplicant> applicants = new HashSet<>();
@@ -73,16 +65,23 @@ public class Specialty {
 
 
 
-    public void addSubject(Subject subject) {
-        Objects.requireNonNull(subject, "subject");
-        neededSubjects.add(subject);
-        subject._addSpecialty(this);
+    public void addSubject(Subject subject, Double weight) {
+        SubjectForSpecialty sfs = new SubjectForSpecialty(weight, this, subject);
+        subjectWeights.add(sfs);
+        subject.getSpecialtyWeights().add(sfs);
     }
 
     public void removeSubject(Subject subject) {
-        Objects.requireNonNull(subject, "subject");
-        neededSubjects.remove(subject);
-        subject._removeSpecialty(this);
+        for (Iterator<SubjectForSpecialty> iterator = subjectWeights.iterator(); iterator.hasNext(); ) {
+            SubjectForSpecialty sfs = iterator.next();
+            if (sfs.getSpecialty().equals(this) && sfs.getSubject().equals(subject)) {
+                iterator.remove();
+                sfs.getSubject().getSpecialtyWeights().remove(sfs);
+                sfs.setSpecialty(null);
+                sfs.setSubject(null);
+                break;
+            }
+        }
     }
 
     public boolean hasNoApplicants() {
@@ -116,8 +115,8 @@ public class Specialty {
         this.numberOfContractPlaces = numberOfContractPlaces;
     }
 
-    public Set<Subject> getNeededSubjects() {
-        return Collections.unmodifiableSet(neededSubjects);
+    public Set<SubjectForSpecialty> getSubjectWeights() {
+        return subjectWeights;
     }
 
     public Set<SpecialtyForApplicant> getApplicants() {

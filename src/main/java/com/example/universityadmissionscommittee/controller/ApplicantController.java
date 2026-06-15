@@ -60,7 +60,8 @@ public class ApplicantController implements GetApplicantId {
                 subjectService.allIdAndName(),
                 specialtyService.allIdAndName(),
                 Arrays.stream(QuotaType.values()).toList(),
-                Arrays.stream(ApplicantStatus.values()).toList()
+                Arrays.stream(ApplicantStatus.values()).toList(),
+                specialtyForApplicantService.findAllSubmissionYears()
         );
     }
 

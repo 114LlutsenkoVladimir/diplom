@@ -102,8 +102,6 @@ public class Applicant {
     public void addBenefit(Benefit benefit) {
         Objects.requireNonNull(benefit, "benefit");
         benefits.add(benefit);
-        // если у Benefit есть обратная сторона applicants — поддержи и её:
-        // benefit.getApplicants().add(this);
     }
 
     public void removeBenefit(Benefit benefit) {
@@ -133,7 +131,6 @@ public class Applicant {
        Domain operations
        ========================== */
 
-    /** Возвращает балл по предмету, иначе бросает IllegalStateException. */
     public int getResultBySubjectId(Long subjectId) {
         Objects.requireNonNull(subjectId, "subjectId");
         return examResults.stream()
@@ -146,7 +143,6 @@ public class Applicant {
                 .orElseThrow(() -> new IllegalStateException("Exam result not found for subjectId=" + subjectId));
     }
 
-    /** Найти оценку по предмету как Optional (иногда удобнее на уровне сервиса). */
     public Optional<ExamResult> findExamResultBySubjectId(Long subjectId) {
         Objects.requireNonNull(subjectId, "subjectId");
         return examResults.stream()
@@ -183,12 +179,10 @@ public class Applicant {
         this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber");
     }
 
-    /** Возвращаю немодифицируемое представление, чтобы не ломали инварианты. */
     public Set<ExamResult> getExamResults() {
         return examResults;
     }
 
-    /** Управляй льготами через add/remove, чтобы исключить null и дубли. */
     public Set<Benefit> getBenefits() {
         return benefits;
     }
@@ -205,13 +199,11 @@ public class Applicant {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Applicant other)) return false;
-        // entity equality by id (Hibernate-friendly): равны только если оба id заданы и равны
         return id != null && id.equals(other.id);
     }
 
     @Override
     public int hashCode() {
-        // рекомендуемый подход для JPA сущностей: стабилен и не тянет коллекции
         return getClass().hashCode();
     }
 

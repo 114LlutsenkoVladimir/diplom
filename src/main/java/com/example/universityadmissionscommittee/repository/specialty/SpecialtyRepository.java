@@ -46,17 +46,16 @@ public interface SpecialtyRepository extends JpaRepository<Specialty, Long> {
     );
 
     @Query("""
-        SELECT new com.example.universityadmissionscommittee.dto.specialty.SpecialtyIdAndNameDto(sp.id, sp.name)
-        FROM Specialty sp
-        WHERE NOT EXISTS (
-          SELECT s
-          FROM Subject s
-          WHERE s MEMBER OF sp.neededSubjects
-            AND s.id NOT IN :subjectIds
-        )
-        """)
+    SELECT new com.example.universityadmissionscommittee.dto.specialty.SpecialtyIdAndNameDto(sp.id, sp.name)
+    FROM Specialty sp
+    WHERE NOT EXISTS (
+        SELECT sw
+        FROM SubjectForSpecialty sw
+        WHERE sw.specialty = sp
+          AND sw.subject.id NOT IN :subjectIds
+    )
+    """)
     List<SpecialtyIdAndNameDto> findAllCoveredBySubjectsNative(@Param("subjectIds") List<Long> subjectIds);
-
     boolean existsByName(String name);
     boolean existsByNumber(Integer number);
 }

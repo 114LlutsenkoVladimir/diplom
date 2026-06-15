@@ -72,7 +72,7 @@ async function initCommittee(initMap) {
         })
 }
 
-function initBenefits(benefits) {
+export function initBenefits(benefits) {
     const container = document.getElementById('benefitIds');
 
     benefits.forEach(benefit => {
@@ -83,7 +83,7 @@ function initBenefits(benefits) {
         checkbox.value = benefit.id;
 
         const label = document.createElement('span');
-        label.textContent = benefit.name;
+        label.textContent = benefit.name + ' (' + benefit.type + ')';
 
         wrapper.appendChild(checkbox);
         wrapper.appendChild(label);
@@ -91,7 +91,7 @@ function initBenefits(benefits) {
     });
 }
 
-function initSubjectScoreInputs(subjects) {
+export function initSubjectScoreInputs(subjects) {
     const container = document.getElementById('subject-scores-container');
 
     // очищаем и добавляем класс сетки
@@ -129,7 +129,7 @@ function initSpecialtySelect(specialties) {
     });
 }
 
-function initQuotaSelect(quotaTypes) {
+export function initQuotaSelect(quotaTypes) {
     const select = document.getElementById('quota-type-select');
     console.log(select)
     console.log(quotaTypes)

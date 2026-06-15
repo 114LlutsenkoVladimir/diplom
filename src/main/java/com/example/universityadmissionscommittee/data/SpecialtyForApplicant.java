@@ -22,12 +22,10 @@ public class SpecialtyForApplicant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Владелец связи (есть FK). Делаем LAZY и обязательным. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "specialty_id", nullable = false)
     private Specialty specialty;
 
-    /** Владелец связи (есть FK). Делаем LAZY и обязательным. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "applicant_id", nullable = false)
     private Applicant applicant;
@@ -37,7 +35,6 @@ public class SpecialtyForApplicant {
     @Column(name = "priority", nullable = false)
     private Integer priority;
 
-    /** В БД хранится строковое имя енама → используем EnumType.STRING. */
     @Enumerated(EnumType.STRING)
     @Column(name = "applicant_status", nullable = false, length = 32)
     private ApplicantStatus applicantStatus = ApplicantStatus.PENDING;
@@ -47,7 +44,6 @@ public class SpecialtyForApplicant {
 
 
     protected SpecialtyForApplicant() {
-        // JPA only
     }
 
     public SpecialtyForApplicant(Applicant applicant, Specialty specialty, Integer priority) {
@@ -59,7 +55,7 @@ public class SpecialtyForApplicant {
 
     public static SpecialtyForApplicant link(Applicant applicant, Specialty specialty, Integer priority) {
         SpecialtyForApplicant sfa = new SpecialtyForApplicant(applicant, specialty, priority);
-        applicant.addSpecialty(sfa);     // двусторонняя синхронизация
+        applicant.addSpecialty(sfa);
         return sfa;
     }
 

@@ -99,6 +99,29 @@
     color: #4b5563;
 }
 
+#registerBtn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    padding: 8px 16px;
+    cursor: pointer;
+
+
+    border: 1px solid #cdcdcd;
+    border-radius: 20px;
+
+
+    transition: all 0.3s ease;
+}
+
+
+#registerBtn:hover {
+    background-color: #9d9d9d;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Адаптив под маленькие экраны */
 @media (max-width: 600px) {
     .auth-main {

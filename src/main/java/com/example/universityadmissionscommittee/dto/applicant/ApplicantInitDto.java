@@ -13,6 +13,7 @@ public record ApplicantInitDto(
         List<SubjectIdAndNameDto> allSubjects,
         List<SpecialtyIdAndNameDto> allSpecialties,
         List<QuotaType> allQuotaTypes,
-        List<ApplicantStatus> allStatuses
+        List<ApplicantStatus> allStatuses,
+        List<Integer> submissionYears
 ) {}
 

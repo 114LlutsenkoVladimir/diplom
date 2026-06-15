@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private UserService service;
 
+
     public UserController(UserService service) {
         this.service = service;
     }
@@ -29,6 +30,7 @@ public class UserController {
         session.setAttribute("id", service.getIdIfApplicant());
         return role;
     }
+
 
     @GetMapping("/logout")
     public String setDefaultUser(HttpSession session) {

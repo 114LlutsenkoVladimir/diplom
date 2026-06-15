@@ -1,11 +1,13 @@
 package com.example.universityadmissionscommittee.controller;
 
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
 import com.example.universityadmissionscommittee.dto.specialty.SpecialtyReportGrouped;
 import com.example.universityadmissionscommittee.service.ApplicantService;
 import com.example.universityadmissionscommittee.service.SpecialtyService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/reports")
@@ -21,8 +23,9 @@ public class ReportController {
     }
 
     @GetMapping("/applicantsReport")
-    public ApplicantReportGrouped applicantsReport() {
-        return applicantService.getApplicantsBySpecialtiesReport();
+    public ApplicantReportGrouped applicantsReport(@RequestParam QuotaType type,
+                                                   @RequestParam int year) {
+        return applicantService.getApplicantsByQuota(type, year);
     }
 
     @GetMapping("/specialtiesReport")

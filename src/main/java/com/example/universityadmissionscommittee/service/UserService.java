@@ -25,6 +25,11 @@ public class UserService {
                 applicantId = -1L;
                 return "committee";
             }
+            case "appeal-committee" -> {
+                applicantId = -1L;
+                return "appeal-committee";
+            }
+
 
             default -> {
                 try {

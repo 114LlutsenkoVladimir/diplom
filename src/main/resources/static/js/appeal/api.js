@@ -4,7 +4,6 @@ export async function fetchAddAppeal(params) {
         const err = await response.json();
         throw new Error(err.message);
     }
-    return response.json();
 }
 
 export async function getAppealsBySpecialty(id) {

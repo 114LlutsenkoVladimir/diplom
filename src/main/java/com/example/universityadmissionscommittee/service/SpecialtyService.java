@@ -108,7 +108,9 @@ public class SpecialtyService  extends AbstractCrudService<Specialty, Long, Spec
                 facultyService.findById(dto.getFacultyId()),
                 dto.getBudgetPlaces(), dto.getContractPlaces());
 
-        dto.getSubjectIds().forEach(id -> specialty.addSubject(subjectService.findById(id)));
+        dto.getSubjects().forEach((key, value) -> specialty.addSubject(
+                subjectService.findById(key), value
+        ));
         return save(specialty);
     }
 }

@@ -67,4 +67,10 @@ public class PageController {
     public String appealPage(HttpSession session) {
         return "appeal/appeal-committee-page";
     }
+
+    @GetMapping("/register")
+    public String registerPage(HttpSession session) {
+        return "registration-applicant-page";
+    }
+
 }

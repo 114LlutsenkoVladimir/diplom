@@ -8,7 +8,11 @@ import java.util.List;
 public interface ExamResultRepositoryCustom {
     List<ExamRowDto> examRowData(List<Long> specialtyIds);
 
+    List<ExamRowDto> examRowData(List<Long> specialtyIds, int year);
+
     List<ExamRowDto> findExamRowsByQuota(QuotaType type);
+
+    List<ExamRowDto> findExamRowsByQuota(QuotaType type, int year);
 
     List<ExamRowDto> findExamRowsByQuotaAndSpecialty(Long specialtyId, QuotaType type);
 }

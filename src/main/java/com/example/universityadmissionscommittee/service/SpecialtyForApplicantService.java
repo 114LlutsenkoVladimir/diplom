@@ -6,6 +6,8 @@ import com.example.universityadmissionscommittee.exception.applicant.ApplicantNo
 import com.example.universityadmissionscommittee.repository.SpecialtyForApplicantRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SpecialtyForApplicantService extends AbstractCrudService<SpecialtyForApplicant,
         Long, SpecialtyForApplicantRepository>{
@@ -19,6 +21,10 @@ public class SpecialtyForApplicantService extends AbstractCrudService<SpecialtyF
         return repository.findById(id).orElseThrow(
                 () -> new ApplicantNotFoundException("Заявку не знайдено")
         );
+    }
+
+    public List<Integer> findAllSubmissionYears() {
+        return repository.findAllSubmissionYears();
     }
 
 }

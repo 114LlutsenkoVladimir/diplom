@@ -24,24 +24,21 @@ public class ExamResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /** Обязательная ссылка, LAZY. Владелец FK — эта сущность. */
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "applicant_id", nullable = false)
     private Applicant applicant;
 
-    /** Обязательная ссылка, LAZY. Владелец FK — эта сущность. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    /** Интегер обязателен → используем примитив и Bean Validation. */
     @Min(0)
-    @Max(200) // поправь границы, если у тебя другие
+    @Max(200)
     @Column(name = "result", nullable = false)
     private int result;
 
     protected ExamResult() {
-        // JPA
     }
 
     public ExamResult(Applicant applicant, Subject subject, int result) {
@@ -50,15 +47,12 @@ public class ExamResult {
         this.result    = result;
     }
 
-    /** Удобная фабрика с двусторонней синхронизацией. */
     public static ExamResult link(Applicant applicant, Subject subject, int result) {
         ExamResult er = new ExamResult(applicant, subject, result);
-        applicant.addExamResult(er); // выставит обратную сторону
-        subject._addExamResult(er);   // если у Subject есть коллекция результатов
+        applicant.addExamResult(er);
+        subject._addExamResult(er);
         return er;
     }
-
-    /* ===== Helpers (двусторонняя синхронизация) ===== */
 
     public void linkApplicant(Applicant applicant) {
         this.applicant = Objects.requireNonNull(applicant, "applicant");

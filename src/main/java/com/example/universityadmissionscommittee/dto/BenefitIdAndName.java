@@ -6,9 +6,16 @@ public class BenefitIdAndName {
 
     private Long id;
 
-    public BenefitIdAndName(String name, Long id) {
+    private String type;
+
+    public BenefitIdAndName(String name, Long id, String type) {
         this.name = name;
         this.id = id;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getName() {

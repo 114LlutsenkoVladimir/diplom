@@ -15,24 +15,32 @@
 <nav class="app-header">
     <div class="app-header-inner">
         <div class="logo" th:if="${session.user == 'applicant'}">
-            <i class="bi bi-mortarboard"></i>
+            <i class="bi bi-person-vcard"></i>
             <span>Абітурієнт</span>
         </div>
+
         <div class="logo" th:if="${session.user == 'committee'}">
             <i class="bi bi-mortarboard"></i>
             <span>Приймальна комісія</span>
         </div>
+
+        <div class="logo" th:if="${session.user == 'appeal-committee'}">
+            <i class="bi bi-clipboard2-check"></i>
+            <span>Апеляційна комісія</span>
+        </div>
+
         <div class="logo" th:if="${session.user == 'admin'}">
-            <i class="bi bi-mortarboard"></i>
+            <i class="bi bi-person-gear"></i>
             <span>Адміністратор</span>
         </div>
+
         <div class="logo" th:if="${session.user == 'user'}">
-            <i class="bi bi-mortarboard"></i>
+            <i class="bi bi-person-help"></i>
             <span>Хто я?</span>
         </div>
 
         <ul class="nav-links header-bar">
-            <li th:if="${session.user != 'user'}">
+            <li th:if="${session.user != 'user' && session.user != 'appeal-committee'}">
                 <a href="/applicants/">
                     <i class="bi bi-people"></i>
                     Абітурієнти
@@ -48,6 +56,12 @@
                 <a href="/specialties/">
                     <i class="bi bi-list-check"></i>
                     Спеціальності
+                </a>
+            </li>
+            <li th:if="${session.user == 'appeal-committee' or session.user == 'admin'}">
+                <a href="/appeals/">
+                    <i class="bi bi-envelope-exclamation"></i>
+                    Апеляції
                 </a>
             </li>
             <li th:if="${session.user == 'committee' or session.user == 'admin'}">

@@ -1,5 +1,5 @@
 export async function sendApplicant(dto) {
-    const response = await fetch("addApplicant", {
+    const response = await fetch("/applicants/addApplicant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dto)
@@ -24,7 +24,7 @@ export async function deleteApplicant(id) {
 }
 
 export async function getApplicantInitDto() {
-    const response = await fetch("initializeApplicantPage")
+    const response = await fetch("/applicants/initializeApplicantPage")
     if (!response.ok) {
         const err = await response.json();
         throw new Error(err.message);

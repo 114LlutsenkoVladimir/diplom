@@ -49,6 +49,11 @@
                     <i class="bi bi-box-arrow-right"></i>
                     logout
                 </button>
+
+                <a href="/register" id="registerBtn" class="btn btn-outline-dark auth-btn" style="text-decoration: none;">
+                    <i class="bi bi-person-plus"></i>
+                    register
+                </a>
             </div>
         </div>
     </section>
@@ -63,7 +68,8 @@
         <ul class="auth-hints-list">
             <li><span><strong>admin</strong>: admin</span></li>
             <li><span><strong>committee</strong>: committee</span></li>
-            <li><span><strong>user</strong>: [empty]</span></li>
+            <li><span><strong>appeal-committee</strong>: appeal-committee</span></li>
+            <li><span><strong>applicant</strong>: enter email</span></li>
         </ul>
     </section>
 
@@ -71,5 +77,6 @@
 
 <script type="module" src="/js/user/app.js"></script>
 <link rel="stylesheet" th:href="@{/css/login.css}">
+
 </body>
 </html>

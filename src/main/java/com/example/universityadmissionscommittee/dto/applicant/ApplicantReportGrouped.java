@@ -94,18 +94,21 @@ public class ApplicantReportGrouped {
         for (var e : subjectsPerSpecSet.entrySet()) {
             subjectIdsBySpecialty.put(e.getKey(), new ArrayList<>(e.getValue()));
         }
-
+        Map<Long, Map<Long, Double>> weightsPerSpec = new HashMap<>();
         // 5) собираем финальный отчёт и сразу считаем средний балл;
         //    при желании — сортируем внутри каждой специальности по среднему (убыв.)
         LinkedHashMap<Long, List<ApplicantReportDtoWithAverageScore>> result = new LinkedHashMap<>();
         for (var e : perSpecApplicants.entrySet()) {
             Long specId = e.getKey();
-            Collection<ApplicantReportDto> applicants = e.getValue().values(); // в порядке добавления
+            Collection<ApplicantReportDto> applicants = e.getValue().values();
+            // в порядке добавления
+            Map<Long, Double> currentSpecWeights = weightsPerSpec.getOrDefault(specId, Collections.emptyMap());
 
             List<ApplicantReportDtoWithAverageScore> rows = applicants.stream()
                     .map(dto -> new ApplicantReportDtoWithAverageScore(
-                            dto, CalculateAverageScoreService.calculate(dto)))
-                    // сортировка по среднему (убыв.), потом по приоритету, потом по id — опционально
+                            dto, CalculateAverageScoreService.calculate(dto, currentSpecWeights)))
+
+
                     .sorted(Comparator
                             .comparingDouble(ApplicantReportDtoWithAverageScore::getAverageScore).reversed()
                             .thenComparing(a -> a.getBase().getPriority(), Comparator.nullsLast(Comparator.naturalOrder()))
