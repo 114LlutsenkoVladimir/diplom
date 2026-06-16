@@ -1,5 +1,5 @@
 import {showError} from "../errorPopup/errorPopup.js";
-import {deleteAppeal, fetchAddAppeal, findAppealById, getAppealsBySpecialty, updateAppealStatus} from "./api.js";
+import {deleteAppeal, fetchAddAppeal, findAppealById, getAppealsBySpecialtyAndQuota, updateAppealStatus} from "./api.js";
 import {buildAddAppealQueryParams} from "./buildDto.js";
 import {clearForm} from "../utils/clearForm.js";
 import {renderAppealTable} from "./renderTable.js";
@@ -17,11 +17,39 @@ export async function handleAddAppeal(event) {
 }
 
 export async function handleSpecialtySelect() {
+    const selector = document.getElementById("specialty-select")
+    const specialtyId = selector.value
+    await handleSpecialtyAndQuotaSelect(specialtyId, null)
+}
+
+
+export async function handleQuotaSelect() {
+    const selector = document.getElementById("quota-type-select")
+    const type = selector.value
+    await handleSpecialtyAndQuotaSelect(null, type)
+}
+
+export async function handleSelectBoth() {
+    const specialtyId = document.getElementById("specialty-select").value
+    const type = document.getElementById("quota-type-select").value
+    await handleSpecialtyAndQuotaSelect(specialtyId, type)
+}
+
+export async function handleSpecialtyAndQuotaSelect(specialtyId, type) {
     try {
-        const selector = document.getElementById("specialty-select")
-        const specialtyId = selector.value
-        const response = await getAppealsBySpecialty(specialtyId)
-        renderAppealTable(response)
+        const params = new URLSearchParams();
+
+        // Отсеиваем undefined, настоящий null, пустую строку "" и строку "null"
+        if (specialtyId && specialtyId !== "null" && specialtyId !== "") {
+            params.append("specialtyId", specialtyId);
+        }
+
+        if (type && type !== "null" && type !== "") {
+            params.append("type", type);
+        }
+
+        const response = await getAppealsBySpecialtyAndQuota(params);
+        renderAppealTable(response);
     } catch (error) {
         showError(error.message);
     }

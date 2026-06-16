@@ -5,6 +5,7 @@ import com.example.universityadmissionscommittee.data.Applicant;
 import com.example.universityadmissionscommittee.data.SpecialtyForApplicant;
 import com.example.universityadmissionscommittee.data.enums.AppealStatus;
 import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.appeal.AppealReportGrouped;
 import com.example.universityadmissionscommittee.exception.applicant.ApplicantNotFoundException;
 import com.example.universityadmissionscommittee.exception.specialty.SpecialtyNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,10 +31,10 @@ public class AppealService extends AbstractCrudService<Appeal, Long, AppealRepos
         this.specialtyForApplicantRepository = specialtyForApplicantRepository;
     }
 
-    public void create(Long specialtyForApplicantId,
+    public Appeal create(Long specialtyForApplicantId,
                        String appealMessage) {
 
-        repository.save(new Appeal(
+        return repository.save(new Appeal(
                 specialtyForApplicantRepository.findById(specialtyForApplicantId)
                         .orElseThrow(
                                 () -> new RuntimeException("Заяву не знайдено")
@@ -46,6 +48,10 @@ public class AppealService extends AbstractCrudService<Appeal, Long, AppealRepos
 
     public AppealReportGrouped appealsByOneSpecialty(Long specialtyId) {
         return appealsBySpecialties(new ArrayList<>(List.of(specialtyId)));
+    }
+
+    public AppealReportGrouped appealsBySpecialtyAndQuota(Long specialtyId, QuotaType type) {
+        return new AppealReportGrouped(repository.appealsBySpecialtyQuotaYear(specialtyId, LocalDate.now().getYear(), type));
     }
 
     @Override

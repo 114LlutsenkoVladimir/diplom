@@ -1,6 +1,8 @@
 package com.example.universityadmissionscommittee.controller;
 
+import com.example.universityadmissionscommittee.data.Appeal;
 import com.example.universityadmissionscommittee.data.enums.AppealStatus;
+import com.example.universityadmissionscommittee.data.enums.QuotaType;
 import com.example.universityadmissionscommittee.dto.appeal.AppealInitDto;
 import com.example.universityadmissionscommittee.dto.appeal.AppealReportGrouped;
 import com.example.universityadmissionscommittee.service.AppealService;
@@ -26,18 +28,26 @@ public class AppealController {
     @GetMapping("/initializeAppealPage")
     public AppealInitDto initialize() {
         return new AppealInitDto(specialtyService.allIdAndName(),
-                new ArrayList<>(List.of(AppealStatus.values())));
+                new ArrayList<>(List.of(AppealStatus.values())),
+                new ArrayList<>(List.of(QuotaType.values())));
     }
 
-    @GetMapping("/filterAppealsBySpecialty/{specialtyId}")
-    public AppealReportGrouped selectSpecialty(@PathVariable Long specialtyId) {
-        return appealService.appealsByOneSpecialty(specialtyId);
+    @GetMapping("/filterAppealsBySpecialtyAndQuota")
+    public AppealReportGrouped selectSpecialty(@RequestParam(required = false) Long specialtyId,
+                                               @RequestParam(required = false) QuotaType type) {
+        return appealService.appealsBySpecialtyAndQuota(specialtyId, type);
     }
 
     @GetMapping("/updateAppealStatus")
     public void updateAppealStatus(@RequestParam AppealStatus status,
                                    @RequestParam Long appealId) {
         appealService.updateAppealStatus(appealId, status);
+    }
+
+    @PostMapping("/addAppeal")
+    public Appeal addAppeal(@RequestParam Long specialtyForApplicantId,
+                            @RequestParam String appealMessage) {
+        return appealService.create(specialtyForApplicantId, appealMessage);
     }
 
     @GetMapping("/findById/{appealId}")

@@ -4,5 +4,5 @@ export function buildAddAppealQueryParams() {
     const params = new URLSearchParams();
     params.append("specialtyForApplicantId", specialtyForApplicantId)
     params.append("appealMessage", appealMessage)
-    return params.toString();
+    return params;
 }

@@ -23,7 +23,6 @@ export async function handleSubmit(event) {
     try {
         event.preventDefault();
         const dto = buildDto();
-        console.log(JSON.stringify(dto))
         const result = await sendApplicant(dto);
         renderApplicantTable(result);
         clearSendForm();

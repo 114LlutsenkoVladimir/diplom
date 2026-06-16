@@ -1,13 +1,16 @@
 export async function fetchAddAppeal(params) {
-    const response = await fetch("addAppeal?" + params)
+    const response = await fetch("addAppeal", {
+        method: "POST",
+        body: params
+    });
     if (!response.ok) {
         const err = await response.json();
         throw new Error(err.message);
     }
 }
 
-export async function getAppealsBySpecialty(id) {
-    const response = await fetch("filterAppealsBySpecialty/" + id)
+export async function getAppealsBySpecialtyAndQuota(params) {
+    const response = await fetch("filterAppealsBySpecialtyAndQuota?" + params)
     if (!response.ok) {
         const err = await response.json();
         throw new Error(err.message);

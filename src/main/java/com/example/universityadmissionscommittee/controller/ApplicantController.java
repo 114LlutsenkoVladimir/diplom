@@ -145,11 +145,6 @@ public class ApplicantController implements GetApplicantId {
         return applicantService.getApplicantsBySpecialtyAndQuotaType(specialtyId, type);
     }
 
-    @GetMapping("/addAppeal")
-    public void addAppeal(@RequestParam Long specialtyForApplicantId,
-                          @RequestParam String appealMessage) {
-        appealService.create(specialtyForApplicantId, appealMessage);
-    }
 
     @GetMapping("/deleteAppeal/{id}")
     public void deleteAppeal(@PathVariable Long id) {
