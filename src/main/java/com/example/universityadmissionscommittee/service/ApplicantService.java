@@ -3,6 +3,7 @@ package com.example.universityadmissionscommittee.service;
 import com.example.universityadmissionscommittee.data.*;
 import com.example.universityadmissionscommittee.data.enums.ApplicantStatus;
 import com.example.universityadmissionscommittee.data.enums.QuotaType;
+import com.example.universityadmissionscommittee.dto.BenefitPriorityComparator;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantCreateDto;
 import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportGrouped;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
@@ -112,13 +113,32 @@ public class ApplicantService extends AbstractCrudService<Applicant, Long, Appli
     }
 
     @Transactional
-    public void updateApplicantStatus(Long applicantId, Long specialtyId, ApplicantStatus status) {
+    public void updateApplicantStatus(Long applicantId, Long specialtyId, ApplicantStatus newStatus) {
         Applicant applicant = findById(applicantId);
-        SpecialtyForApplicant specialty = applicant.getSpecialties().stream()
+        Specialty specialty = specialtyService.findById(specialtyId);
+
+        SpecialtyForApplicant specialtyForApplicant = applicant.getSpecialties().stream()
                 .filter(s -> Objects.equals(s.getSpecialty().getId(), specialtyId)).findFirst().orElseThrow(
                         SpecialtyNotFoundException::new
                 );
-        specialty.setApplicantStatus(status);
+        ApplicantStatus selectedStatus = specialtyForApplicant.getApplicantStatus();
+        if(selectedStatus.equals(newStatus))
+            return;
+
+        Set<Benefit> benefits = applicant.getBenefits();
+        if (selectedStatus == ApplicantStatus.ACCEPTED_BUDGET) {
+            if(benefits.stream().anyMatch(benefit -> benefit.getType() == QuotaType.QUOTA_1)) {
+                specialty.increaseBudgetPlacesQuota1();
+            } else if(benefits.stream().anyMatch(benefit -> benefit.getType() == QuotaType.QUOTA_2)) {
+                specialty.decreaseBudgetPlacesQuota2();
+            } else {
+                specialty.decreaseBudgetPlacesGeneral();
+            }
+        } else if(selectedStatus == ApplicantStatus.ACCEPTED_CONTRACT) {
+            specialty.decreaseBudgetPlacesQuota1();
+        } else
+
+        specialtyForApplicant.setApplicantStatus(newStatus);
         save(applicant);
     }
 

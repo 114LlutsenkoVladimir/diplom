@@ -1,6 +1,8 @@
 package com.example.universityadmissionscommittee.data;
 
 
+import com.example.universityadmissionscommittee.exception.specialty.SpecialtyCreationException;
+import com.example.universityadmissionscommittee.exception.specialty.SpecialtyNotFoundException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -55,12 +57,15 @@ public class Specialty {
     }
 
     public Specialty(String name, int number, Faculty faculty,
-                     int budgetPlacesGeneral, int numberOfContractPlaces) {
+                     int budgetPlacesGeneral, int budgetPlacesQuota1,
+                     int budgetPlacesQuota2, int numberOfContractPlaces) {
         this.name = Objects.requireNonNull(name, "name");
         this.number = number;
         this.faculty = Objects.requireNonNull(faculty, "faculty");
         this.budgetPlacesGeneral = budgetPlacesGeneral;
         this.numberOfContractPlaces = numberOfContractPlaces;
+        this.budgetPlacesQuota1 = budgetPlacesQuota1;
+        this.budgetPlacesQuota2 = budgetPlacesQuota2;
     }
 
 
@@ -123,6 +128,51 @@ public class Specialty {
         return Collections.unmodifiableSet(applicants);
     }
 
+    public int getBudgetPlacesQuota1() {
+        return budgetPlacesQuota1;
+    }
+
+    public int getBudgetPlacesQuota2() {
+        return budgetPlacesQuota2;
+    }
+
+    public void setBudgetPlacesQuota2(int budgetPlacesQuota2) {
+        this.budgetPlacesQuota2 = budgetPlacesQuota2;
+    }
+
+    public void setBudgetPlacesQuota1(int budgetPlacesQuota1) {
+        this.budgetPlacesQuota1 = budgetPlacesQuota1;
+    }
+
+    public void increaseBudgetPlacesGeneral() {
+        budgetPlacesGeneral++;
+    }
+
+    public void decreaseBudgetPlacesGeneral() {
+        if(budgetPlacesGeneral - 1 < 0)
+            throw new SpecialtyCreationException("Бюджетних місць загального конкурсу не залишилось");
+        budgetPlacesGeneral--;
+    }
+
+    public void increaseBudgetPlacesQuota1() {
+        budgetPlacesQuota1++;
+    }
+
+    public void decreaseBudgetPlacesQuota1() {
+        if(budgetPlacesQuota1 - 1 < 0)
+            throw new SpecialtyCreationException("Бюджетних місць квоти 1 не залишилось");
+        budgetPlacesQuota1--;
+    }
+
+    public void increaseBudgetPlacesQuota2() {
+        budgetPlacesQuota2++;
+    }
+
+    public void decreaseBudgetPlacesQuota2() {
+        if(budgetPlacesQuota2 - 1 < 0)
+            throw new SpecialtyCreationException("Бюджетних місць квоти 2 не залишилось");
+        budgetPlacesQuota2--;
+    }
 
 
     @Override

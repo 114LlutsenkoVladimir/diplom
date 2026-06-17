@@ -39,10 +39,13 @@ public class SpecialtyController {
     @GetMapping("/updateSpecialtyPlaces")
     public SpecialtyReportGrouped updateSpecialty(
             @RequestParam Long id,
-            @RequestParam(required = false) Optional<Integer> budgetPlaces,
+            @RequestParam(required = false) Optional<Integer> budgetPlacesGeneral,
+            @RequestParam(required = false) Optional<Integer> budgetPlacesQuota1,
+            @RequestParam(required = false) Optional<Integer> budgetPlacesQuota2,
             @RequestParam(required = false) Optional<Integer> contractPlaces) {
 
-        specialtyService.updateSpecialtyPlaces(id, budgetPlaces, contractPlaces);
+        specialtyService.updateSpecialtyPlaces(id, budgetPlacesGeneral,
+                budgetPlacesQuota1, budgetPlacesQuota2,contractPlaces);
         return specialtyService.findSpecialtyReportDtoById(id, null, null);
     }
 
@@ -58,8 +61,6 @@ public class SpecialtyController {
             @RequestParam(required = false) Integer number) {
         return specialtyService.findSpecialtyReportDtoById(id, name, number);
     }
-
-
 
     @PostMapping("/createSpecialty")
     public SpecialtyReportGrouped createSpecialty(@RequestBody SpecialtyCreateDto dto) {

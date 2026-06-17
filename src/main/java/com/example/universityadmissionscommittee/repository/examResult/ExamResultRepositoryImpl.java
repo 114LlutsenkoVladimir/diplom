@@ -36,7 +36,8 @@ public class ExamResultRepositoryImpl implements ExamResultRepositoryCustom {
             asp.submission_date,
             b.id as benefit_id,
             b.name as benefit_name,
-            b.priority_points as benefit_points
+            b.priority_points as benefit_points,
+            sfs.weight as subject_weight
         FROM specialty sp
         JOIN subject_for_specialty sfs ON sfs.specialty_id = sp.id
         JOIN subject s ON s.id = sfs.subject_id

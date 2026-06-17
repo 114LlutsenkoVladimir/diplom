@@ -1,6 +1,9 @@
 package com.example.universityadmissionscommittee.dto.applicant;
 
+import com.example.universityadmissionscommittee.dto.BenefitIdNamePoints;
+
 import java.util.HashMap;
+import java.util.List;
 
 public class ApplicantReportDtoWithAverageScore {
 
@@ -58,4 +61,6 @@ public class ApplicantReportDtoWithAverageScore {
     public String getStatus() {
         return base.getStatus();
     }
+
+    public List<BenefitIdNamePoints> getBenefits() {return base.getBenefits();}
 }

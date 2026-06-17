@@ -46,10 +46,14 @@ public class SpecialtyService  extends AbstractCrudService<Specialty, Long, Spec
 
     @Transactional
     public void updateSpecialtyPlaces(Long id,
-                                      Optional<Integer> budgetPlaces,
+                                      Optional<Integer> budgetPlacesGeneral,
+                                      Optional<Integer> budgetPlacesQuota1,
+                                      Optional<Integer> budgetPlacesQuota2,
                                       Optional<Integer> contractPlaces) {
         Specialty specialty = findById(id);
-        budgetPlaces.ifPresent(specialty::setBudgetPlacesGeneral);
+        budgetPlacesGeneral.ifPresent(specialty::setBudgetPlacesGeneral);
+        budgetPlacesQuota1.ifPresent(specialty::setBudgetPlacesQuota1);
+        budgetPlacesQuota2.ifPresent(specialty::setBudgetPlacesQuota2);
         contractPlaces.ifPresent(specialty::setNumberOfContractPlaces);
         repository.save(specialty);
     }
@@ -106,7 +110,9 @@ public class SpecialtyService  extends AbstractCrudService<Specialty, Long, Spec
 
         Specialty specialty = new Specialty(dto.getName(), dto.getNumber(),
                 facultyService.findById(dto.getFacultyId()),
-                dto.getBudgetPlaces(), dto.getContractPlaces());
+                dto.getBudgetPlaces(), dto.getBudgetPlacesQuota1(),
+                dto.getBudgetPlacesQuota2(),
+                dto.getContractPlaces());
 
         dto.getSubjects().forEach((key, value) -> specialty.addSubject(
                 subjectService.findById(key), value

@@ -27,7 +27,8 @@ import java.time.LocalDate;
                         @ColumnResult(name = "submission_date", type = LocalDate.class),
                         @ColumnResult(name = "benefit_id", type = Long.class),
                         @ColumnResult(name = "benefit_name", type = String.class),
-                        @ColumnResult(name = "benefit_points", type = Integer.class)
+                        @ColumnResult(name = "benefit_points", type = Integer.class),
+                        @ColumnResult(name = "subject_weight", type = Double.class)
                 }
         )
 )

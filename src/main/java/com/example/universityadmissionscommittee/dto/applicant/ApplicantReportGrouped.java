@@ -1,5 +1,6 @@
 package com.example.universityadmissionscommittee.dto.applicant;
 
+import com.example.universityadmissionscommittee.dto.BenefitPriorityComparator;
 import com.example.universityadmissionscommittee.dto.ExamRowDto;
 import com.example.universityadmissionscommittee.service.CalculateAverageScoreService;
 
@@ -33,6 +34,8 @@ public class ApplicantReportGrouped {
             final Long specId = row.getSpecialtyId();
             final Long subjId = row.getSubjectId();
 
+            System.out.println(specId);
+            System.out.println(subjId);
             // 1) Имена спец/предметов (NULL пропускаем — это норм при LEFT JOIN’ах)
             if (specId != null) {
                 specialtyNames.putIfAbsent(specId, row.getSpecialtyName());
@@ -75,9 +78,14 @@ public class ApplicantReportGrouped {
                     )
             );
 
-            // 3.2 оценки (могут быть null при LEFT JOIN)
-            if (subjId != null && row.getScore() != null) {
-                dto.addExamResult(subjId, row.getScore());   // перезапись последним значением — предсказуемо
+            // 3.2 оценки и веса
+            if (subjId != null) {
+                if (row.getScore() != null) {
+                    dto.addExamResult(subjId, row.getScore());
+                }
+                if (row.getSubjectWeight() != null) {
+                    dto.addSubjectWeight(subjId, row.getSubjectWeight());
+                }
             }
 
             // 3.3 льготы (могут дублироваться из-за LEFT JOIN) — защитимся от дублей на лету
@@ -94,26 +102,35 @@ public class ApplicantReportGrouped {
         for (var e : subjectsPerSpecSet.entrySet()) {
             subjectIdsBySpecialty.put(e.getKey(), new ArrayList<>(e.getValue()));
         }
-        Map<Long, Map<Long, Double>> weightsPerSpec = new HashMap<>();
         // 5) собираем финальный отчёт и сразу считаем средний балл;
         //    при желании — сортируем внутри каждой специальности по среднему (убыв.)
         LinkedHashMap<Long, List<ApplicantReportDtoWithAverageScore>> result = new LinkedHashMap<>();
         for (var e : perSpecApplicants.entrySet()) {
             Long specId = e.getKey();
             Collection<ApplicantReportDto> applicants = e.getValue().values();
-            // в порядке добавления
-            Map<Long, Double> currentSpecWeights = weightsPerSpec.getOrDefault(specId, Collections.emptyMap());
 
             List<ApplicantReportDtoWithAverageScore> rows = applicants.stream()
                     .map(dto -> new ApplicantReportDtoWithAverageScore(
-                            dto, CalculateAverageScoreService.calculate(dto, currentSpecWeights)))
+                            dto, CalculateAverageScoreService.calculate(dto)))
 
 
                     .sorted(Comparator
-                            .comparingDouble(ApplicantReportDtoWithAverageScore::getAverageScore).reversed()
-                            .thenComparing(a -> a.getBase().getPriority(), Comparator.nullsLast(Comparator.naturalOrder()))
+                            .comparingDouble(ApplicantReportDtoWithAverageScore::getAverageScore)
+                            .reversed()
+
+                            // сравнение льгот
+                            .thenComparing(
+                                    ApplicantReportDtoWithAverageScore::getBenefits,
+                                    BenefitPriorityComparator.INSTANCE
+                            )
+                            // сравнение приоритета заявления
+                            .thenComparing(
+                                    a -> a.getBase().getPriority(),
+                                    Comparator.nullsLast(Integer::compareTo)
+                            )
+                            // стабильная сортировка
                             .thenComparing(a -> a.getBase().getApplicantId()))
-                    .toList();
+                            .toList();
 
             result.put(specId, rows);
         }

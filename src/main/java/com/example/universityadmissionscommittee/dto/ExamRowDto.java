@@ -22,6 +22,7 @@ public class ExamRowDto {
     private String benefitName;
     private Integer benefitPoints;
     private LocalDate submissionDate;
+    private Double subjectWeight;
 
     public ExamRowDto(Long specialtyForApplicantId,
                       Long applicantId, String firstName,
@@ -36,7 +37,8 @@ public class ExamRowDto {
                       LocalDate submissionDate,
                       Long benefitId,
                       String benefitName,
-                      Integer benefitPoints) {
+                      Integer benefitPoints,
+                      Double subjectWeight) {
         this.specialtyForApplicantId = specialtyForApplicantId;
         this.applicantId = applicantId;
         this.firstName = firstName;
@@ -54,6 +56,7 @@ public class ExamRowDto {
         this.benefitName = benefitName;
         this.benefitPoints = benefitPoints;
         this.submissionDate = submissionDate;
+        this.subjectWeight = subjectWeight;
     }
 
     public Long getSpecialtyForApplicantId() {
@@ -118,5 +121,9 @@ public class ExamRowDto {
 
     public LocalDate getSubmissionDate() {
         return submissionDate;
+    }
+
+    public Double getSubjectWeight() {
+        return subjectWeight;
     }
 }

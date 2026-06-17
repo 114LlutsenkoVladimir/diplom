@@ -12,6 +12,10 @@ public class SpecialtyCreateDto {
 
     private Integer budgetPlaces = 0;
 
+    private Integer budgetPlacesQuota1 = 0;
+
+    private Integer budgetPlacesQuota2 = 0;
+
     private Integer contractPlaces = 0;
 
     private HashMap<Long, Double> subjects = new HashMap<>();
@@ -47,6 +51,14 @@ public class SpecialtyCreateDto {
         return subjects;
     }
 
+    public Integer getBudgetPlacesQuota1() {
+        return budgetPlacesQuota1;
+    }
+
+    public Integer getBudgetPlacesQuota2() {
+        return budgetPlacesQuota2;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -69,5 +81,13 @@ public class SpecialtyCreateDto {
 
     public void setSubjects(HashMap<Long, Double> subjects) {
         this.subjects = subjects;
+    }
+
+    public void setBudgetPlacesQuota1(Integer budgetPlacesQuota1) {
+        this.budgetPlacesQuota1 = budgetPlacesQuota1;
+    }
+
+    public void setBudgetPlacesQuota2(Integer budgetPlacesQuota2) {
+        this.budgetPlacesQuota2 = budgetPlacesQuota2;
     }
 }

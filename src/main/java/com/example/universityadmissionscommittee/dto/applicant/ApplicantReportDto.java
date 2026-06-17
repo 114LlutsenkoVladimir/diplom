@@ -21,6 +21,7 @@ public class ApplicantReportDto {
 
     private HashMap<Long, Integer> subjectAndScore = new HashMap<>();
     private List<BenefitIdNamePoints> benefits = new ArrayList<>();
+    private HashMap<Long, Double> subjectWeights = new HashMap<>();
 
     public ApplicantReportDto(Long specialtyForApplicantId,
                               Long applicantId, String firstName,
@@ -92,4 +93,14 @@ public class ApplicantReportDto {
     public void addBenefit(Long id, String name, Integer points) {
         addBenefit(new BenefitIdNamePoints(id, name, points));
     }
+
+    public HashMap<Long, Double> getSubjectWeights() {
+        return subjectWeights;
+    }
+
+    public void addSubjectWeight(Long subjId, double weight) {
+        subjectWeights.put(subjId, weight);
+    }
+
+
 }

@@ -30,13 +30,15 @@ public interface ExamResultRepository extends JpaRepository<ExamResult, Long>, E
                 spf.date,
                 b.id,
                 b.name,
-                b.priorityPoints
+                b.priorityPoints,
+                sw.weight
             )
             from ExamResult e
             join e.applicant a
             join e.subject s
             join a.specialties spf
             join spf.specialty sp
+            join sp.subjectWeights sw on sw.subject.id = s.id
             LEFT join a.benefits b
             WHERE (:applicantId is null or a.id = :applicantId)
             AND (:email IS NULL OR a.email = :email)

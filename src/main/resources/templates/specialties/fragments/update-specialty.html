@@ -1,21 +1,32 @@
 <div id="updateSpecialtyPlaces" class="form-inline">
     <div class="form-field">
-        <label for="updatePlacesSpecialtyId">ID спеціальності</label>
+        <label for="updatePlacesSpecialtyId">Id спеціальності</label>
         <input type="number" id="updatePlacesSpecialtyId" placeholder="id" required />
     </div>
 
     <div class="form-field">
-        <label for="updatePlacesBudgetPlaces">Бюджетні місця</label>
-        <input type="number" id="updatePlacesBudgetPlaces" placeholder="budget places" min="0" />
+        <label for="updateBudgetPlacesGeneral">Бюджетні місця загальний конкурс</label>
+        <input type="number" id="updateBudgetPlacesGeneral" placeholder="Загальний конкурс" min="0" />
+    </div>
+
+    <div class="form-field">
+        <label for="updatePlacesBudgetPlacesQuota1">Бюджетні місця квоти 1</label>
+        <input type="number" id="updatePlacesBudgetPlacesQuota1" placeholder="Квота 1" min="0" />
+    </div>
+
+
+    <div class="form-field">
+        <label for="updatePlacesBudgetPlacesQuota2">Бюджетні місця квоти 2</label>
+        <input type="number" id="updatePlacesBudgetPlacesQuota2" placeholder="Квота 2" min="0" />
     </div>
 
     <div class="form-field">
         <label for="updatePlacesContractPlaces">Контрактні місця</label>
-        <input type="number" id="updatePlacesContractPlaces" placeholder="contract places" min="0"/>
+        <input type="number" id="updatePlacesContractPlaces" placeholder="Контрактні місця" min="0"/>
     </div>
 
     <button id="updateSpecialtyBtn" class="btn-outline">
         <i class="bi bi-arrow-repeat"></i>
-        Update
+        Оновити місця
     </button>
 </div>

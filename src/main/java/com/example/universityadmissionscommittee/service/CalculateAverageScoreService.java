@@ -6,16 +6,20 @@ import com.example.universityadmissionscommittee.dto.applicant.ApplicantReportDt
 import java.util.Map;
 
 public class CalculateAverageScoreService {
-    public static double calculate(ApplicantReportDto applicant,
-                                   Map<Long, Double> subjectWeights) {
+    public static double calculate(ApplicantReportDto applicant) {
+
         double res = 0;
-        for (Map.Entry<Long, Integer> entry : applicant.getSubjectAndScore().entrySet()) {
+
+        for (Map.Entry<Long, Integer> entry :
+                applicant.getSubjectAndScore().entrySet()) {
+
             Long subjectId = entry.getKey();
             Integer score = entry.getValue();
 
-            Double weight = subjectWeights.getOrDefault(subjectId, 0.0);
+            Double weight = applicant.getSubjectWeights()
+                    .getOrDefault(subjectId, 0.0);
 
-            res += (score * weight);
+            res += score * weight;
         }
 
         return res;
